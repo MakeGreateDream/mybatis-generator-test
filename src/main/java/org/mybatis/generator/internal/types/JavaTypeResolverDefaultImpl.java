@@ -58,7 +58,7 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
         typeMap.put(Types.BINARY, new JdbcTypeInformation("BINARY", //$NON-NLS-1$
                 new FullyQualifiedJavaType("byte[]"))); //$NON-NLS-1$
         typeMap.put(Types.BIT, new JdbcTypeInformation("BIT", //$NON-NLS-1$
-                new FullyQualifiedJavaType(Boolean.class.getName())));
+                new FullyQualifiedJavaType(Integer.class.getName())));
         typeMap.put(Types.BLOB, new JdbcTypeInformation("BLOB", //$NON-NLS-1$
                 new FullyQualifiedJavaType("byte[]"))); //$NON-NLS-1$
         typeMap.put(Types.BOOLEAN, new JdbcTypeInformation("BOOLEAN", //$NON-NLS-1$
@@ -103,7 +103,7 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
         typeMap.put(Types.REF, new JdbcTypeInformation("REF", //$NON-NLS-1$
                 new FullyQualifiedJavaType(Object.class.getName())));
         typeMap.put(Types.SMALLINT, new JdbcTypeInformation("SMALLINT", //$NON-NLS-1$
-                new FullyQualifiedJavaType(Short.class.getName())));
+                new FullyQualifiedJavaType(Integer.class.getName())));
         typeMap.put(Types.STRUCT, new JdbcTypeInformation("STRUCT", //$NON-NLS-1$
                 new FullyQualifiedJavaType(Object.class.getName())));
         typeMap.put(Types.TIME, new JdbcTypeInformation("TIME", //$NON-NLS-1$
@@ -111,14 +111,14 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
         typeMap.put(Types.TIMESTAMP, new JdbcTypeInformation("TIMESTAMP", //$NON-NLS-1$
                 new FullyQualifiedJavaType(Date.class.getName())));
         typeMap.put(Types.TINYINT, new JdbcTypeInformation("TINYINT", //$NON-NLS-1$
-                new FullyQualifiedJavaType(Byte.class.getName())));
+                new FullyQualifiedJavaType(Integer.class.getName())));
         typeMap.put(Types.VARBINARY, new JdbcTypeInformation("VARBINARY", //$NON-NLS-1$
                 new FullyQualifiedJavaType("byte[]"))); //$NON-NLS-1$
         typeMap.put(Types.VARCHAR, new JdbcTypeInformation("VARCHAR", //$NON-NLS-1$
                 new FullyQualifiedJavaType(String.class.getName())));
         
     }
-
+    @Override
     public void addConfigurationProperties(Properties properties) {
         this.properties.putAll(properties);
         forceBigDecimals = StringUtility
@@ -126,6 +126,7 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
                         .getProperty(PropertyRegistry.TYPE_RESOLVER_FORCE_BIG_DECIMALS));
     }
 
+    @Override
     public FullyQualifiedJavaType calculateJavaType(
             IntrospectedColumn introspectedColumn) {
         FullyQualifiedJavaType answer;
@@ -146,7 +147,7 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
                 } else if (introspectedColumn.getLength() > 4) {
                     answer = new FullyQualifiedJavaType(Integer.class.getName());
                 } else {
-                    answer = new FullyQualifiedJavaType(Short.class.getName());
+                    answer = new FullyQualifiedJavaType(Integer.class.getName());
                 }
                 break;
 
@@ -161,6 +162,7 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
         return answer;
     }
 
+    @Override
     public String calculateJdbcTypeName(IntrospectedColumn introspectedColumn) {
         String answer;
         JdbcTypeInformation jdbcTypeInformation = typeMap
@@ -185,10 +187,12 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
         return answer;
     }
 
+    @Override
     public void setWarnings(List<String> warnings) {
         this.warnings = warnings;
     }
 
+    @Override
     public void setContext(Context context) {
         this.context = context;
     }

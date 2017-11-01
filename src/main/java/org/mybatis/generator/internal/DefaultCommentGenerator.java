@@ -148,6 +148,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
         }
 
         /** 导入包**/
+        innerClass.addJavaDocLine("import io.swagger.annotations.ApiModelProperty;");
         innerClass.addJavaDocLine("import lombok.*;");
 
         innerClass.addJavaDocLine(addJavaDocLine(introspectedTable.getFullyQualifiedTable()));
