@@ -45,7 +45,7 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
     }
 
     @Override
-    protected void addCountByExampleMethod(Interface interfaze) {
+    public void addCountByExampleMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateCountByExample()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedCountByExampleMethodGenerator();
             initializeAndExecuteGenerator(methodGenerator, interfaze);
@@ -53,7 +53,7 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
     }
 
     @Override
-    protected void addDeleteByExampleMethod(Interface interfaze) {
+    public void addDeleteByExampleMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateDeleteByExample()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedDeleteByExampleMethodGenerator();
             initializeAndExecuteGenerator(methodGenerator, interfaze);
@@ -69,7 +69,7 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
     }
 
     @Override
-    protected void addInsertMethod(Interface interfaze) {
+    public void addInsertMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateInsert()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedInsertMethodGenerator(false);
             initializeAndExecuteGenerator(methodGenerator, interfaze);
@@ -101,7 +101,7 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
     }
 
     @Override
-    protected void addSelectByPrimaryKeyMethod(Interface interfaze) {
+    public void addSelectByPrimaryKeyMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateSelectByPrimaryKey()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedSelectByPrimaryKeyMethodGenerator(false, false);
             initializeAndExecuteGenerator(methodGenerator, interfaze);
@@ -109,7 +109,7 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
     }
 
     @Override
-    protected void addUpdateByExampleSelectiveMethod(Interface interfaze) {
+    public void addUpdateByExampleSelectiveMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByExampleSelective()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedUpdateByExampleSelectiveMethodGenerator();
             initializeAndExecuteGenerator(methodGenerator, interfaze);

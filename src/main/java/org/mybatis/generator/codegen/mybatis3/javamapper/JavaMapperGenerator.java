@@ -16,6 +16,7 @@
 package org.mybatis.generator.codegen.mybatis3.javamapper;
 
 import org.mybatis.generator.api.CommentGenerator;
+import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
@@ -55,6 +56,36 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
     public List<CompilationUnit> getCompilationUnits() {
         progressCallback.startTask(getString("Progress.17", //$NON-NLS-1$
                 introspectedTable.getFullyQualifiedTable().toString()));
+
+        /** 增加servicej接口类**/
+        CommentGenerator commentGeneratorService = context.getCommentGenerator();
+        FullyQualifiedJavaType serviceType = new FullyQualifiedJavaType(
+                introspectedTable.getServiceType());
+        Interface interfazeService = new Interface(serviceType);
+        interfazeService.setVisibility(JavaVisibility.PUBLIC);
+        commentGeneratorService.addJavaFileComment(interfazeService);
+
+        String rootInterfaceService = introspectedTable
+                .getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
+        if (!stringHasValue(rootInterfaceService)) {
+            rootInterfaceService = context.getJavaClientGeneratorConfiguration()
+                    .getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
+        }
+
+        if (stringHasValue(rootInterfaceService)) {
+            FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(
+                    rootInterfaceService);
+            interfazeService.addSuperInterface(fqjt);
+            interfazeService.addImportedType(fqjt);
+        }
+
+        addCountByExampleMethod(interfazeService);
+        addDeleteByExampleMethod(interfazeService);
+        addInsertMethod(interfazeService);
+        addSelectByPrimaryKeyMethod(interfazeService);
+        addUpdateByExampleSelectiveMethod(interfazeService);
+
+
         CommentGenerator commentGenerator = context.getCommentGenerator();
 
         FullyQualifiedJavaType type = new FullyQualifiedJavaType(
@@ -64,10 +95,10 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
         commentGenerator.addJavaFileComment(interfaze);
 
         String rootInterface = introspectedTable
-            .getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
+                .getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
         if (!stringHasValue(rootInterface)) {
             rootInterface = context.getJavaClientGeneratorConfiguration()
-                .getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
+                    .getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
         }
 
         if (stringHasValue(rootInterface)) {
@@ -76,27 +107,19 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
             interfaze.addSuperInterface(fqjt);
             interfaze.addImportedType(fqjt);
         }
-        
+
         addCountByExampleMethod(interfaze);
         addDeleteByExampleMethod(interfaze);
         addInsertMethod(interfaze);
         addSelectByPrimaryKeyMethod(interfaze);
         addUpdateByExampleSelectiveMethod(interfaze);
 
-        /*addUpdateByExampleWithBLOBsMethod(interfaze);
-        addUpdateByExampleWithoutBLOBsMethod(interfaze);
-        addUpdateByPrimaryKeySelectiveMethod(interfaze);
-        addUpdateByPrimaryKeyWithBLOBsMethod(interfaze);
-        addUpdateByPrimaryKeyWithoutBLOBsMethod(interfaze);
-        addDeleteByPrimaryKeyMethod(interfaze);
-        addInsertSelectiveMethod(interfaze);
-        addSelectByExampleWithBLOBsMethod(interfaze);
-        addSelectByExampleWithoutBLOBsMethod(interfaze);*/
-
         List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
         if (context.getPlugins().clientGenerated(interfaze, null,
                 introspectedTable)) {
             answer.add(interfaze);
+            answer.add(interfazeService);
+
         }
         
         List<CompilationUnit> extraCompilationUnits = getExtraCompilationUnits();
@@ -107,14 +130,14 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
         return answer;
     }
 
-    protected void addCountByExampleMethod(Interface interfaze) {
+    public void addCountByExampleMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateCountByExample()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new CountByExampleMethodGenerator();
             initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }
 
-    protected void addDeleteByExampleMethod(Interface interfaze) {
+    public void addDeleteByExampleMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateDeleteByExample()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new DeleteByExampleMethodGenerator();
             initializeAndExecuteGenerator(methodGenerator, interfaze);
@@ -128,7 +151,7 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
         }
     }
 
-    protected void addInsertMethod(Interface interfaze) {
+    public void addInsertMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateInsert()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new InsertMethodGenerator(false);
             initializeAndExecuteGenerator(methodGenerator, interfaze);
@@ -156,14 +179,14 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
         }
     }
 
-    protected void addSelectByPrimaryKeyMethod(Interface interfaze) {
+    public void addSelectByPrimaryKeyMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateSelectByPrimaryKey()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new SelectByPrimaryKeyMethodGenerator(false);
             initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }
 
-    protected void addUpdateByExampleSelectiveMethod(Interface interfaze) {
+    public void addUpdateByExampleSelectiveMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByExampleSelective()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new UpdateByExampleSelectiveMethodGenerator();
             initializeAndExecuteGenerator(methodGenerator, interfaze);

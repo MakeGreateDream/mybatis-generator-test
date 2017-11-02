@@ -323,7 +323,6 @@ public class DefaultCommentGenerator implements CommentGenerator {
         String nextLine = System.getProperty("line.separator");
         StringBuilder sb = new StringBuilder();
         sb.append("/**" + nextLine);
-        sb.append("  * " + nextLine);
         sb.append("  * " + str + nextLine);
         sb.append("  * " + nextLine);
         sb.append("  * @author " + ShellRunner.AUTHOR + nextLine);

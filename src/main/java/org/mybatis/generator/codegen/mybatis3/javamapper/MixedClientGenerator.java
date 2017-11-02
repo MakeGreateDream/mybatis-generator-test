@@ -47,7 +47,7 @@ public class MixedClientGenerator extends JavaMapperGenerator {
     }
 
     @Override
-    protected void addInsertMethod(Interface interfaze) {
+    public void addInsertMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateInsert()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedInsertMethodGenerator(false);
             initializeAndExecuteGenerator(methodGenerator, interfaze);
@@ -55,7 +55,7 @@ public class MixedClientGenerator extends JavaMapperGenerator {
     }
 
     @Override
-    protected void addSelectByPrimaryKeyMethod(Interface interfaze) {
+    public void addSelectByPrimaryKeyMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateSelectByPrimaryKey()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedSelectByPrimaryKeyMethodGenerator(true, false);
             initializeAndExecuteGenerator(methodGenerator, interfaze);

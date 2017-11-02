@@ -90,7 +90,7 @@ public class RenameExampleClassPlugin extends PluginAdapter {
 
     @Override
     public void initialized(IntrospectedTable introspectedTable) {
-        String oldType = introspectedTable.getBaseRecordType();
+        String oldType = introspectedTable.getExampleType();
         Matcher matcher = pattern.matcher(oldType);
         oldType = matcher.replaceAll(replaceString);
 

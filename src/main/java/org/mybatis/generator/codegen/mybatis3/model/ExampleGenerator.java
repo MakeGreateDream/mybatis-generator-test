@@ -27,16 +27,12 @@ import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.OutputUtilities;
-import org.mybatis.generator.api.dom.java.CompilationUnit;
-import org.mybatis.generator.api.dom.java.Field;
-import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
-import org.mybatis.generator.api.dom.java.InnerClass;
-import org.mybatis.generator.api.dom.java.JavaVisibility;
-import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.api.dom.java.*;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
+import org.mybatis.generator.codegen.mybatis3.javamapper.JavaMapperGenerator;
+import org.mybatis.generator.config.PropertyRegistry;
+import org.mybatis.generator.internal.rules.Rules;
 
 /**
  *
@@ -47,11 +43,12 @@ import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
  */
 public class ExampleGenerator extends AbstractJavaGenerator {
 
+    private boolean generateForJava5;
+
     public ExampleGenerator() {
         super();
     }
 
-    @Override
     public List<CompilationUnit> getCompilationUnits() {
         FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();
         progressCallback.startTask(getString(
@@ -59,37 +56,16 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         CommentGenerator commentGenerator = context.getCommentGenerator();
 
         FullyQualifiedJavaType type = new FullyQualifiedJavaType(
-                introspectedTable.getBaseRecordType());
+                introspectedTable.getExampleType());
         TopLevelClass topLevelClass = new TopLevelClass(type);
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
         commentGenerator.addJavaFileComment(topLevelClass);
 
         // add default constructor
-        /*Method method = new Method();
+        Method method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setConstructor(true);
         method.setName(type.getShortName());
-        method.addBodyLine("oredCriteria = new ArrayList<Criteria>();"); //$NON-NLS-1$
-
-        commentGenerator.addGeneralMethodComment(method, introspectedTable);
-        topLevelClass.addMethod(method);
-
-        // add field, getter, setter for orderby clause
-        Field field = new Field();
-        field.setVisibility(JavaVisibility.PROTECTED);
-        field.setType(FullyQualifiedJavaType.getStringInstance());
-        field.setName("orderByClause"); //$NON-NLS-1$
-        commentGenerator.addFieldComment(field, introspectedTable);
-        topLevelClass.addField(field);
-
-        method = new Method();
-        method.setVisibility(JavaVisibility.PUBLIC);
-        method.setName("setOrderByClause"); //$NON-NLS-1$
-        method.addParameter(new Parameter(FullyQualifiedJavaType
-                .getStringInstance(), "orderByClause")); //$NON-NLS-1$
-        method.addBodyLine("this.orderByClause = orderByClause;"); //$NON-NLS-1$
-        commentGenerator.addGeneralMethodComment(method, introspectedTable);
-        topLevelClass.addMethod(method);
 
         method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
@@ -99,112 +75,37 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         commentGenerator.addGeneralMethodComment(method, introspectedTable);
         topLevelClass.addMethod(method);
 
-        // add field, getter, setter for distinct
-        field = new Field();
-        field.setVisibility(JavaVisibility.PROTECTED);
-        field.setType(FullyQualifiedJavaType.getBooleanPrimitiveInstance());
-        field.setName("distinct"); //$NON-NLS-1$
-        commentGenerator.addFieldComment(field, introspectedTable);
-        topLevelClass.addField(field);
 
-        method = new Method();
-        method.setVisibility(JavaVisibility.PUBLIC);
-        method.setName("setDistinct"); //$NON-NLS-1$
-        method.addParameter(new Parameter(FullyQualifiedJavaType
-                .getBooleanPrimitiveInstance(), "distinct")); //$NON-NLS-1$
-        method.addBodyLine("this.distinct = distinct;"); //$NON-NLS-1$
-        commentGenerator.addGeneralMethodComment(method, introspectedTable);
-        topLevelClass.addMethod(method);
-
-        method = new Method();
-        method.setVisibility(JavaVisibility.PUBLIC);
-        method.setReturnType(FullyQualifiedJavaType
-                .getBooleanPrimitiveInstance());
-        method.setName("isDistinct"); //$NON-NLS-1$
-        method.addBodyLine("return distinct;"); //$NON-NLS-1$
-        commentGenerator.addGeneralMethodComment(method, introspectedTable);
-        topLevelClass.addMethod(method);
-
-        // add field and methods for the list of ored criteria
-        field = new Field();
-        field.setVisibility(JavaVisibility.PROTECTED);
-
-        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(
-                "java.util.List<Criteria>"); //$NON-NLS-1$
-        field.setType(fqjt);
-        field.setName("oredCriteria"); //$NON-NLS-1$
-        commentGenerator.addFieldComment(field, introspectedTable);
-        topLevelClass.addField(field);
-
-        method = new Method();
-        method.setVisibility(JavaVisibility.PUBLIC);
-        method.setReturnType(fqjt);
-        method.setName("getOredCriteria"); //$NON-NLS-1$
-        method.addBodyLine("return oredCriteria;"); //$NON-NLS-1$
-        commentGenerator.addGeneralMethodComment(method, introspectedTable);
-        topLevelClass.addMethod(method);
-
-        method = new Method();
-        method.setVisibility(JavaVisibility.PUBLIC);
-        method.setName("or"); //$NON-NLS-1$
-        method.addParameter(new Parameter(FullyQualifiedJavaType
-                .getCriteriaInstance(), "criteria")); //$NON-NLS-1$
-        method.addBodyLine("oredCriteria.add(criteria);"); //$NON-NLS-1$
-        commentGenerator.addGeneralMethodComment(method, introspectedTable);
-        topLevelClass.addMethod(method);
-
-        method = new Method();
-        method.setVisibility(JavaVisibility.PUBLIC);
-        method.setName("or"); //$NON-NLS-1$
-        method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());
-        method.addBodyLine("Criteria criteria = createCriteriaInternal();"); //$NON-NLS-1$
-        method.addBodyLine("oredCriteria.add(criteria);"); //$NON-NLS-1$
-        method.addBodyLine("return criteria;"); //$NON-NLS-1$
-        commentGenerator.addGeneralMethodComment(method, introspectedTable);
-        topLevelClass.addMethod(method);
-
-        method = new Method();
-        method.setVisibility(JavaVisibility.PUBLIC);
-        method.setName("createCriteria"); //$NON-NLS-1$
-        method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());
-        method.addBodyLine("Criteria criteria = createCriteriaInternal();"); //$NON-NLS-1$
-        method.addBodyLine("if (oredCriteria.size() == 0) {"); //$NON-NLS-1$
-        method.addBodyLine("oredCriteria.add(criteria);"); //$NON-NLS-1$
-        method.addBodyLine("}"); //$NON-NLS-1$
-        method.addBodyLine("return criteria;"); //$NON-NLS-1$
-        commentGenerator.addGeneralMethodComment(method, introspectedTable);
-        topLevelClass.addMethod(method);
-
-        method = new Method();
-        method.setVisibility(JavaVisibility.PROTECTED);
-        method.setName("createCriteriaInternal"); //$NON-NLS-1$
-        method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());
-        method.addBodyLine("Criteria criteria = new Criteria();"); //$NON-NLS-1$
-        method.addBodyLine("return criteria;"); //$NON-NLS-1$
-        commentGenerator.addGeneralMethodComment(method, introspectedTable);
-        topLevelClass.addMethod(method);
-
-        method = new Method();
-        method.setVisibility(JavaVisibility.PUBLIC);
-        method.setName("clear"); //$NON-NLS-1$
-        method.addBodyLine("oredCriteria.clear();"); //$NON-NLS-1$
-        method.addBodyLine("orderByClause = null;"); //$NON-NLS-1$
-        method.addBodyLine("distinct = false;"); //$NON-NLS-1$
-        commentGenerator.addGeneralMethodComment(method, introspectedTable);
-        topLevelClass.addMethod(method);
-
-        // now generate the inner class that holds the AND conditions
-        topLevelClass.addInnerClass(getGeneratedCriteriaInnerClass(topLevelClass));
-
-        topLevelClass.addInnerClass(getCriteriaInnerClass(topLevelClass));
-
-        topLevelClass.addInnerClass(getCriterionInnerClass(topLevelClass));
-
+        List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
         if (context.getPlugins().modelExampleClassGenerated(
                 topLevelClass, introspectedTable)) {
             answer.add(topLevelClass);
-        }*/
-        List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
+        }
+
+        return answer;
+    }
+
+    private InnerClass getCriteriaInnerClass(TopLevelClass topLevelClass) {
+        Method method;
+
+        InnerClass answer = new InnerClass(FullyQualifiedJavaType
+                .getCriteriaInstance());
+
+        answer.setVisibility(JavaVisibility.PUBLIC);
+        answer.setStatic(true);
+        answer.setSuperClass(FullyQualifiedJavaType
+                .getGeneratedCriteriaInstance());
+
+        context.getCommentGenerator().addClassComment(answer,
+                introspectedTable, true);
+
+        method = new Method();
+        method.setVisibility(JavaVisibility.PROTECTED);
+        method.setName("Criteria"); //$NON-NLS-1$
+        method.setConstructor(true);
+        method.addBodyLine("super();"); //$NON-NLS-1$
+        answer.addMethod(method);
+
         return answer;
     }
 
@@ -350,30 +251,6 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method.addParameter(new Parameter(FullyQualifiedJavaType
                 .getObjectInstance(), "secondValue")); //$NON-NLS-1$
         method.addBodyLine("this(condition, value, secondValue, null);"); //$NON-NLS-1$
-        answer.addMethod(method);
-
-        return answer;
-    }
-
-    private InnerClass getCriteriaInnerClass(TopLevelClass topLevelClass) {
-        Method method;
-
-        InnerClass answer = new InnerClass(FullyQualifiedJavaType
-                .getCriteriaInstance());
-
-        answer.setVisibility(JavaVisibility.PUBLIC);
-        answer.setStatic(true);
-        answer.setSuperClass(FullyQualifiedJavaType
-                .getGeneratedCriteriaInstance());
-
-        context.getCommentGenerator().addClassComment(answer,
-                introspectedTable, true);
-
-        method = new Method();
-        method.setVisibility(JavaVisibility.PROTECTED);
-        method.setName("Criteria"); //$NON-NLS-1$
-        method.setConstructor(true);
-        method.addBodyLine("super();"); //$NON-NLS-1$
         answer.addMethod(method);
 
         return answer;

@@ -126,8 +126,6 @@ public class TableConfiguration extends PropertyHolder {
         columnOverrides = new ArrayList<ColumnOverride>();
         ignoredColumns = new HashMap<IgnoredColumn, Boolean>();
 
-        /** 默认生成Example类，改为false**/
-
         insertStatementEnabled = true;
         selectByPrimaryKeyStatementEnabled = true;
         selectByExampleStatementEnabled = true;

@@ -78,29 +78,6 @@ public class ShellRunner {
             return;
         }
 
-
-        /*Set<String> fullyqualifiedTables = new HashSet<String>();
-        if (!isBlank(TABLES)) {
-            StringTokenizer st = new StringTokenizer(TABLES, ","); 
-            while (st.hasMoreTokens()) {
-                String s = st.nextToken().trim();
-                if (s.length() > 0) {
-                    fullyqualifiedTables.add(s);
-                }
-            }
-        }
-
-        Set<String> contexts = new HashSet<String>();
-        if (!isBlank(CONTEXT_IDS)) {
-            StringTokenizer st = new StringTokenizer(CONTEXT_IDS, ","); 
-            while (st.hasMoreTokens()) {
-                String s = st.nextToken().trim();
-                if (s.length() > 0) {
-                    contexts.add(s);
-                }
-            }
-        }*/
-
         try {
             ConfigurationParser cp = new ConfigurationParser(warnings);
             Configuration config = cp.parseConfiguration(configurationFile);

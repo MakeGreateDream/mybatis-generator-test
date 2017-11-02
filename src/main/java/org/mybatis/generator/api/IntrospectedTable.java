@@ -77,6 +77,9 @@ public abstract class IntrospectedTable {
         /** The attr base record type. */
         ATTR_BASE_RECORD_TYPE,
 
+        /** serviceType**/
+        ATTR_SERVICE_TYPE,
+
         /** The attr record with blobs type. */
         ATTR_RECORD_WITH_BLOBS_TYPE,
 
@@ -530,6 +533,10 @@ public abstract class IntrospectedTable {
      */
     public String getBaseRecordType() {
         return internalAttributes.get(InternalAttribute.ATTR_BASE_RECORD_TYPE);
+    }
+
+    public String getServiceType() {
+        return internalAttributes.get(InternalAttribute.ATTR_SERVICE_TYPE);
     }
 
     /**
@@ -1391,20 +1398,28 @@ public abstract class IntrospectedTable {
         sb.append(pakkage);
         sb.append('.');
         sb.append(fullyQualifiedTable.getDomainObjectName());
+        sb.append("Po");
         setBaseRecordType(sb.toString());
 
         sb.setLength(0);
         sb.append(pakkage);
         sb.append('.');
         sb.append(fullyQualifiedTable.getDomainObjectName());
-//        sb.append("WithBLOBs"); //$NON-NLS-1$
+        sb.append("Service");
+        setServiceType(sb.toString());
+
+        sb.setLength(0);
+        sb.append(pakkage);
+        sb.append('.');
+        sb.append(fullyQualifiedTable.getDomainObjectName());
+        sb.append("WithBLOBs"); //$NON-NLS-1$
         setRecordWithBLOBsType(sb.toString());
 
         sb.setLength(0);
         sb.append(pakkage);
         sb.append('.');
         sb.append(fullyQualifiedTable.getDomainObjectName());
-        //sb.append("Example"); //$NON-NLS-1$
+        sb.append("ServiceImpl"); //$NON-NLS-1$
         setExampleType(sb.toString());
     }
 
@@ -1643,6 +1658,11 @@ public abstract class IntrospectedTable {
     public void setBaseRecordType(String baseRecordType) {
         internalAttributes.put(InternalAttribute.ATTR_BASE_RECORD_TYPE,
                 baseRecordType);
+    }
+
+    public void setServiceType(String serviceType) {
+        internalAttributes.put(InternalAttribute.ATTR_SERVICE_TYPE,
+                serviceType);
     }
 
     /**
