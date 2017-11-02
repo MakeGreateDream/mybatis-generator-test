@@ -80,6 +80,9 @@ public abstract class IntrospectedTable {
         /** serviceType**/
         ATTR_SERVICE_TYPE,
 
+        /** serviceImplType**/
+        ATTR_SERVICE_IMPL_TYPE,
+
         /** The attr record with blobs type. */
         ATTR_RECORD_WITH_BLOBS_TYPE,
 
@@ -537,6 +540,10 @@ public abstract class IntrospectedTable {
 
     public String getServiceType() {
         return internalAttributes.get(InternalAttribute.ATTR_SERVICE_TYPE);
+    }
+
+    public String getServiceImplType() {
+        return internalAttributes.get(InternalAttribute.ATTR_SERVICE_IMPL_TYPE);
     }
 
     /**
@@ -1420,7 +1427,7 @@ public abstract class IntrospectedTable {
         sb.append('.');
         sb.append(fullyQualifiedTable.getDomainObjectName());
         sb.append("ServiceImpl"); //$NON-NLS-1$
-        setExampleType(sb.toString());
+        setServiceImplType(sb.toString());
     }
 
     /**
@@ -1662,6 +1669,11 @@ public abstract class IntrospectedTable {
 
     public void setServiceType(String serviceType) {
         internalAttributes.put(InternalAttribute.ATTR_SERVICE_TYPE,
+                serviceType);
+    }
+
+    public void setServiceImplType(String serviceType) {
+        internalAttributes.put(InternalAttribute.ATTR_SERVICE_IMPL_TYPE,
                 serviceType);
     }
 

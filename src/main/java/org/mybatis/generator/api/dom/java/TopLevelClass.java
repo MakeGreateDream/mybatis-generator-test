@@ -89,8 +89,8 @@ public class TopLevelClass extends InnerClass implements CompilationUnit {
     public void addImportedType(FullyQualifiedJavaType importedType) {
         if (importedType != null
                 && importedType.isExplicitlyImported()
-                && !importedType.getPackageName().equals(
-                        getType().getPackageName())) {
+                //&& !importedType.getPackageName().equals(getType().getPackageName())  修复同包下导入不了问题
+                ) {
             importedTypes.add(importedType);
         }
     }

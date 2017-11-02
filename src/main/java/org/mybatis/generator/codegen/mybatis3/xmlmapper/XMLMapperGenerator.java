@@ -67,12 +67,12 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
         context.getCommentGenerator().addRootComment(answer);
 
         addInsertElement(answer);
-        addCountByExampleElement(answer);
         addDeleteByExampleElement(answer);
         addUpdateByExampleSelectiveElement(answer);
         addSelectByPrimaryKeyElement(answer);
 
-        /*addResultMapWithoutBLOBsElement(answer);
+        /*addCountByExampleElement(answer);
+        addResultMapWithoutBLOBsElement(answer);
         addBaseColumnListElement(answer);
         addBlobColumnListElement(answer);
         addSelectByExampleWithBLOBsElement(answer);

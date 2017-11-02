@@ -23,6 +23,7 @@ import org.mybatis.generator.api.dom.java.*;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.config.PropertyRegistry;
+import org.mybatis.generator.internal.util.StringUtility;
 import org.mybatis.generator.utils.DateTimeUtils;
 
 import java.util.Properties;
@@ -172,15 +173,6 @@ public class DefaultCommentGenerator implements CommentGenerator {
 
         topLevelClass.addJavaDocLine(addJavaDocLine(introspectedTable.getFullyQualifiedTable()+"2"));
 
-        /*String remarks = introspectedTable.getRemarks();
-        if (addRemarkComments && StringUtility.stringHasValue(remarks)) {
-            topLevelClass.addJavaDocLine(" * Database Table Remarks:");
-            String[] remarkLines = remarks.split(System.getProperty("line.separator"));  
-            for (String remarkLine : remarkLines) {
-                topLevelClass.addJavaDocLine(" *   " + remarkLine);  
-            }
-        }*/
-
         addJavadocTag(topLevelClass, true);
 
     }
@@ -268,19 +260,6 @@ public class DefaultCommentGenerator implements CommentGenerator {
         if (suppressAllComments) {
             return;
         }
-
-
-        /*StringBuilder sb = new StringBuilder();
-        sb.append(introspectedColumn.getActualColumnName());
-        sb.setLength(0);
-        sb.append("* @return the value of" + introspectedTable.getFullyQualifiedTable())
-        .append('.')
-        .append(introspectedColumn.getActualColumnName());
-
-        method.addJavaDocLine(addJavaDocLine(sb.toString()));
-
-        addJavadocTag(method, false);*/
-
     }
 
     @Override
@@ -290,21 +269,6 @@ public class DefaultCommentGenerator implements CommentGenerator {
         if (suppressAllComments) {
             return;
         }
-        /*Parameter parm = method.getParameters().get(0);
-        StringBuilder sb = new StringBuilder();
-        sb.append(introspectedColumn.getActualColumnName())
-        sb.setLength(0);
-        sb.append(" * @param "); 
-        sb.append(parm.getName());
-        sb.append(" the value for "); 
-        sb.append(introspectedTable.getFullyQualifiedTable());
-        sb.append('.');
-        sb.append(introspectedColumn.getActualColumnName());
-
-        method.addJavaDocLine(addJavaDocLine(sb.toString()));
-
-        addJavadocTag(method, false);*/
-
     }
 
     @Override
@@ -330,7 +294,6 @@ public class DefaultCommentGenerator implements CommentGenerator {
         sb.append("  */");
         return sb.toString();
     }
-
 
     public String addXmlLine(){
         String nextLine = System.getProperty("line.separator");

@@ -16,7 +16,6 @@
 package org.mybatis.generator.codegen.mybatis3.javamapper;
 
 import org.mybatis.generator.api.CommentGenerator;
-import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
@@ -25,12 +24,11 @@ import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.*;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.XMLMapperGenerator;
-import org.mybatis.generator.config.PropertyRegistry;
+import org.mybatis.generator.internal.DefaultCommentGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 /**
@@ -57,58 +55,14 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
         progressCallback.startTask(getString("Progress.17", //$NON-NLS-1$
                 introspectedTable.getFullyQualifiedTable().toString()));
 
-        /** 增加servicej接口类**/
-        CommentGenerator commentGeneratorService = context.getCommentGenerator();
-        FullyQualifiedJavaType serviceType = new FullyQualifiedJavaType(
-                introspectedTable.getServiceType());
-        Interface interfazeService = new Interface(serviceType);
-        interfazeService.setVisibility(JavaVisibility.PUBLIC);
-        commentGeneratorService.addJavaFileComment(interfazeService);
-
-        String rootInterfaceService = introspectedTable
-                .getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
-        if (!stringHasValue(rootInterfaceService)) {
-            rootInterfaceService = context.getJavaClientGeneratorConfiguration()
-                    .getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
-        }
-
-        if (stringHasValue(rootInterfaceService)) {
-            FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(
-                    rootInterfaceService);
-            interfazeService.addSuperInterface(fqjt);
-            interfazeService.addImportedType(fqjt);
-        }
-
-        addCountByExampleMethod(interfazeService);
-        addDeleteByExampleMethod(interfazeService);
-        addInsertMethod(interfazeService);
-        addSelectByPrimaryKeyMethod(interfazeService);
-        addUpdateByExampleSelectiveMethod(interfazeService);
-
-
-        CommentGenerator commentGenerator = context.getCommentGenerator();
+        DefaultCommentGenerator commentGenerator = new DefaultCommentGenerator();
 
         FullyQualifiedJavaType type = new FullyQualifiedJavaType(
                 introspectedTable.getMyBatis3JavaMapperType());
         Interface interfaze = new Interface(type);
         interfaze.setVisibility(JavaVisibility.PUBLIC);
-        commentGenerator.addJavaFileComment(interfaze);
+        interfaze.addJavaDocLine(commentGenerator.addJavaDocLine(interfaze.getType().getShortName()));
 
-        String rootInterface = introspectedTable
-                .getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
-        if (!stringHasValue(rootInterface)) {
-            rootInterface = context.getJavaClientGeneratorConfiguration()
-                    .getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
-        }
-
-        if (stringHasValue(rootInterface)) {
-            FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(
-                    rootInterface);
-            interfaze.addSuperInterface(fqjt);
-            interfaze.addImportedType(fqjt);
-        }
-
-        addCountByExampleMethod(interfaze);
         addDeleteByExampleMethod(interfaze);
         addInsertMethod(interfaze);
         addSelectByPrimaryKeyMethod(interfaze);
@@ -118,7 +72,6 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
         if (context.getPlugins().clientGenerated(interfaze, null,
                 introspectedTable)) {
             answer.add(interfaze);
-            answer.add(interfazeService);
 
         }
         
