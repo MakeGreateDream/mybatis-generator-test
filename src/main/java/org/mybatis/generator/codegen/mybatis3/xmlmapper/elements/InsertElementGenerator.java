@@ -62,21 +62,16 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
 
         context.getCommentGenerator().addComment(answer);
 
-        GeneratedKey gk = introspectedTable.getGeneratedKey();
-        if (gk != null) {
-            IntrospectedColumn introspectedColumn = introspectedTable
-                    .getColumn(gk.getColumn());
-            // if the column is null, then it's a configuration error. The
-            // warning has already been reported
+        List<IntrospectedColumn> primaryKeyColumns = introspectedTable.getPrimaryKeyColumns();
+        if (!primaryKeyColumns.isEmpty()) {
+            IntrospectedColumn introspectedColumn = primaryKeyColumns.get(0);
+
             if (introspectedColumn != null) {
-                if (gk.isJdbcStandard()) {
-                    answer.addAttribute(new Attribute(
-                            "useGeneratedKeys", "true")); //$NON-NLS-1$ //$NON-NLS-2$
-                    answer.addAttribute(new Attribute(
-                            "keyProperty", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
-                } else {
-                    answer.addElement(getSelectKey(introspectedColumn, gk));
-                }
+                answer.addAttribute(new Attribute(
+                        "useGeneratedKeys", "true")); //$NON-NLS-1$ //$NON-NLS-2$
+                answer.addAttribute(new Attribute(
+                        "keyProperty", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
+//                    answer.addElement(getSelectKey(introspectedColumn, gk));
             }
         }
 

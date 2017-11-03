@@ -81,7 +81,7 @@ public class DefaultDAOMethodNameCalculator implements DAOMethodNameCalculator {
     @Override
     public String getDeleteByExampleMethodName(
             IntrospectedTable introspectedTable) {
-        return "deleteByExample"; //$NON-NLS-1$
+        return "deleteByParam"; //$NON-NLS-1$
     }
     @Override
     public String getDeleteByPrimaryKeyMethodName(
@@ -135,6 +135,7 @@ public class DefaultDAOMethodNameCalculator implements DAOMethodNameCalculator {
         return "updateByPrimaryKeySelective"; //$NON-NLS-1$
     }
 
+    @Override
     public String getCountByExampleMethodName(
             IntrospectedTable introspectedTable) {
         return "countByExample"; //$NON-NLS-1$
@@ -143,7 +144,7 @@ public class DefaultDAOMethodNameCalculator implements DAOMethodNameCalculator {
     @Override
     public String getUpdateByExampleSelectiveMethodName(
             IntrospectedTable introspectedTable) {
-        return "updateByExampleSelective"; //$NON-NLS-1$
+        return "updateByParam"; //$NON-NLS-1$
     }
 
     @Override

@@ -52,7 +52,7 @@ public class SelectByPrimaryKeyMethodGenerator extends
         method.setReturnType(returnType);
         importedTypes.add(returnType);
 
-        method.setName(introspectedTable.getSelectByPrimaryKeyStatementId());
+        method.setName(introspectedTable.getSelectStatementId());
 
         if (!isSimple && introspectedTable.getRules().generatePrimaryKeyClass()) {
             FullyQualifiedJavaType type = new FullyQualifiedJavaType(

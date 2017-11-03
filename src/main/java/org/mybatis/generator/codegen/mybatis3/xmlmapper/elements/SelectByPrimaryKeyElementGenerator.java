@@ -18,6 +18,7 @@ package org.mybatis.generator.codegen.mybatis3.xmlmapper.elements;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
 import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
@@ -40,7 +41,7 @@ public class SelectByPrimaryKeyElementGenerator extends
         XmlElement answer = new XmlElement("select"); //$NON-NLS-1$
 
         answer.addAttribute(new Attribute(
-                "id", introspectedTable.getSelectByPrimaryKeyStatementId())); //$NON-NLS-1$
+                "id", introspectedTable.getSelectStatementId())); //$NON-NLS-1$
         if (introspectedTable.getRules().generateResultMapWithBLOBs()) {
             answer.addAttribute(new Attribute("resultMap", //$NON-NLS-1$
                     introspectedTable.getResultMapWithBLOBsId()));
@@ -78,11 +79,28 @@ public class SelectByPrimaryKeyElementGenerator extends
             sb.append("' as QUERYID,"); //$NON-NLS-1$
         }
         answer.addElement(new TextElement(sb.toString()));
-        answer.addElement(getBaseColumnListElement());
-        if (introspectedTable.hasBLOBColumns()) {
-            answer.addElement(new TextElement(",")); //$NON-NLS-1$
-            answer.addElement(getBlobColumnListElement());
+
+        StringBuilder selectColunm = new StringBuilder();
+        for (int i = 0; i < introspectedTable.getAllColumns().size(); i++) {
+            IntrospectedColumn introspectedColumn = introspectedTable.getAllColumns().get(i);
+            selectColunm.append(MyBatis3FormattingUtilities
+                    .getEscapedColumnName(introspectedColumn));
+
+            if (i + 1 < introspectedTable.getAllColumns().size()) {
+                if (!introspectedTable.getAllColumns().get(i + 1).isIdentity()) {
+                    selectColunm.append(", ");
+                }
+            }
+
+            if (selectColunm.length() > 80) {
+                answer.addElement(new TextElement(selectColunm.toString()));
+                selectColunm.setLength(0);
+                OutputUtilities.xmlIndent(selectColunm, 1);
+            }
+
         }
+
+        answer.addElement(new TextElement(selectColunm.toString()));
 
         sb.setLength(0);
         sb.append("from "); //$NON-NLS-1$

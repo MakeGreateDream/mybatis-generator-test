@@ -105,7 +105,6 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         interfazeService.addJavaDocLine(commentGenerator.addJavaDocLine(interfazeService.getType().getShortName()));
 
         /** 添加方法**/
-        addCountByExampleMethod(interfazeService);
         addDeleteByExampleMethod(interfazeService);
         addInsertMethod(interfazeService);
         addSelectByPrimaryKeyMethod(interfazeService);
@@ -195,13 +194,6 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 
 
     /** 生成方法类**/
-    public void addCountByExampleMethod(Interface interfaze) {
-        if (introspectedTable.getRules().generateCountByExample()) {
-            AbstractJavaMapperMethodGenerator methodGenerator = new CountByExampleMethodGenerator();
-            initializeAndExecuteGenerator(methodGenerator, interfaze);
-        }
-    }
-
     public void addDeleteByExampleMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateDeleteByExample()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new DeleteByExampleMethodGenerator();
