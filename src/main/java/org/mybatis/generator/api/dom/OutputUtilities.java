@@ -85,6 +85,11 @@ public class OutputUtilities {
         sb.append(lineSeparator);
     }
 
+    /** 返回标示新一行**/
+    public static String newLine() {
+        return lineSeparator;
+    }
+
     /**
      * returns a unique set of "import xxx;" Strings for the set of types.
      *

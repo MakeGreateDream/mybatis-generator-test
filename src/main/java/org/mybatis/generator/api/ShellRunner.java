@@ -15,26 +15,19 @@
  */
 package org.mybatis.generator.api;
 
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
-
-import java.io.File;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.StringTokenizer;
-
-import org.apache.tools.ant.util.StringUtils;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.XMLParserException;
 import org.mybatis.generator.internal.DefaultShellCallback;
-import org.mybatis.generator.logging.LogFactory;
+
+import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 /**
  * This class allows the code generator to be run from the command line.
@@ -49,15 +42,7 @@ public class ShellRunner {
     /**是否覆盖已存在的文件**/
     private static final boolean OVERWRITE = true;
 
-    /** 上下文id**/
-    private static final String CONTEXT_IDS = ""; //-contextids
-
-    /** 表名在config.xml中配置**/
-//    private static final String TABLES = ""; //-tables
-
     private static final boolean VERBOSE = false ;
-
-//    private static final String FORCE_JAVA_LOGGING = ""; //-forceJavaLogging
 
     /** 作者**/
     public static final String AUTHOR = "xxx";
@@ -111,8 +96,7 @@ public class ShellRunner {
             }
             return;
         } catch (InterruptedException e) {
-            // ignore (will never happen with the DefaultShellCallback)
-            ;
+            writeLine(e.getMessage());
         }
 
         for (String warning : warnings) {

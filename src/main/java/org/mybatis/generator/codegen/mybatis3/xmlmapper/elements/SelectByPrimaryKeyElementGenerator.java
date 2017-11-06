@@ -19,6 +19,7 @@ import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.OutputUtilities;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
@@ -42,13 +43,9 @@ public class SelectByPrimaryKeyElementGenerator extends
 
         answer.addAttribute(new Attribute(
                 "id", introspectedTable.getSelectStatementId())); //$NON-NLS-1$
-        if (introspectedTable.getRules().generateResultMapWithBLOBs()) {
-            answer.addAttribute(new Attribute("resultMap", //$NON-NLS-1$
-                    introspectedTable.getResultMapWithBLOBsId()));
-        } else {
-            answer.addAttribute(new Attribute("resultMap", //$NON-NLS-1$
-                    introspectedTable.getBaseResultMapId()));
-        }
+
+        answer.addAttribute(new Attribute("resultType",
+                new FullyQualifiedJavaType(introspectedTable.getBaseRecordType()).getFullyQualifiedName()));
 
         String parameterType;
         if (introspectedTable.getRules().generatePrimaryKeyClass()) {
@@ -130,6 +127,8 @@ public class SelectByPrimaryKeyElementGenerator extends
         if (context.getPlugins()
                 .sqlMapSelectByPrimaryKeyElementGenerated(answer,
                         introspectedTable)) {
+            //xml方法换行
+            parentElement.addElement(new TextElement(OutputUtilities.newLine()));
             parentElement.addElement(answer);
         }
     }

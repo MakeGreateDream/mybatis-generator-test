@@ -19,6 +19,7 @@ import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.ShellRunner;
+import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.java.*;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
@@ -287,11 +288,14 @@ public class DefaultCommentGenerator implements CommentGenerator {
         String nextLine = System.getProperty("line.separator");
         StringBuilder sb = new StringBuilder();
         sb.append("/**" + nextLine);
-        sb.append("  * " + str + nextLine);
-        sb.append("  * " + nextLine);
-        sb.append("  * @author " + ShellRunner.AUTHOR + nextLine);
-        sb.append("  * Date " + DateTimeUtils.dateTimeSty() + nextLine);
-        sb.append("  */");
+        OutputUtilities.javaIndent(sb,1);
+        sb.append("*" + nextLine);
+        OutputUtilities.javaIndent(sb,1);
+        sb.append("* @author " + ShellRunner.AUTHOR + nextLine);
+        OutputUtilities.javaIndent(sb,1);
+        sb.append("* @Date " + DateTimeUtils.dateTimeSty() + nextLine);
+        OutputUtilities.javaIndent(sb,1);
+        sb.append("*/");
         return sb.toString();
     }
 

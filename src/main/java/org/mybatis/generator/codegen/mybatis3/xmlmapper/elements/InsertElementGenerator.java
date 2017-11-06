@@ -71,7 +71,6 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
                         "useGeneratedKeys", "true")); //$NON-NLS-1$ //$NON-NLS-2$
                 answer.addAttribute(new Attribute(
                         "keyProperty", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
-//                    answer.addElement(getSelectKey(introspectedColumn, gk));
             }
         }
 
@@ -98,22 +97,27 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
                     .getEscapedColumnName(introspectedColumn));
             valuesClause.append(MyBatis3FormattingUtilities
                     .getParameterClause(introspectedColumn));
+
             if (i + 1 < columns.size()) {
                 if (!columns.get(i + 1).isIdentity()) {
-                    insertClause.append(", "); //$NON-NLS-1$
-                    valuesClause.append(", "); //$NON-NLS-1$
+                    insertClause.append(", ");
+                    valuesClause.append(", ");
                 }
             }
 
-            if (valuesClause.length() > 80) {
+            if(insertClause.length() > 80){
                 answer.addElement(new TextElement(insertClause.toString()));
                 insertClause.setLength(0);
                 OutputUtilities.xmlIndent(insertClause, 1);
+            }
+
+            if (valuesClause.length() > 5) {
 
                 valuesClauses.add(valuesClause.toString());
                 valuesClause.setLength(0);
                 OutputUtilities.xmlIndent(valuesClause, 1);
             }
+
         }
 
         insertClause.append(')');
@@ -128,6 +132,8 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
 
         if (context.getPlugins().sqlMapInsertElementGenerated(answer,
                 introspectedTable)) {
+            //xml方法换行
+            parentElement.addElement(new TextElement(OutputUtilities.newLine()));
             parentElement.addElement(answer);
         }
     }

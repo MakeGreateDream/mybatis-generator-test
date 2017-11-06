@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.tools.ant.util.StringUtils;
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedColumn;
@@ -141,7 +140,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         /** 引入jar包**/
         topLevelClass.addImportedType(introspectedTable.getServiceType());
         topLevelClass.addImportedType(introspectedTable.getMyBatis3JavaMapperType());
-        topLevelClass.addImportedType("javax.annotation.Resource");
+        topLevelClass.addImportedType("javax.annotation.Autowried");
         topLevelClass.addImportedType("org.springframework.stereotype.Service");
 
         /** 增加注解**/
@@ -152,7 +151,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 
         /** 引入mapper类**/
         Field field = new Field();
-        field.addAnnotation("@Resource");
+        field.addAnnotation("@Autowried");
         field.setVisibility(JavaVisibility.PUBLIC);
         field.setType(new FullyQualifiedJavaType(introspectedTable.getMyBatis3JavaMapperType()));
         field.setName("mapper"); //$NON-NLS-1$

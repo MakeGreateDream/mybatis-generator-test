@@ -15,6 +15,7 @@
  */
 package org.mybatis.generator.codegen.mybatis3.xmlmapper.elements;
 
+import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
@@ -49,15 +50,19 @@ public class DeleteByExampleElementGenerator extends
         sb.append(introspectedTable
                 .getAliasedFullyQualifiedTableNameAtRuntime());
 
+        sb.append(OutputUtilities.newLine());
+        OutputUtilities.xmlIndent(sb,2);
         sb.append(" where ");
         sb.append(MyBatis3FormattingUtilities.getAliasedEscapedColumnName(introspectedTable.getAllColumns().get(0)));
         sb.append(" = ");
         sb.append(MyBatis3FormattingUtilities.getParameterClause(introspectedTable.getAllColumns().get(0)));
         answer.addElement(new TextElement(sb.toString()));
-//        answer.addElement(getExampleIncludeElement());
+
 
         if (context.getPlugins().sqlMapDeleteByExampleElementGenerated(
                 answer, introspectedTable)) {
+            //xml方法换行
+            parentElement.addElement(new TextElement(OutputUtilities.newLine()));
             parentElement.addElement(answer);
         }
     }

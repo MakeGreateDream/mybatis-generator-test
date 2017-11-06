@@ -32,21 +32,33 @@ public class NullProgressCallback implements ProgressCallback {
         super();
     }
 
-    public void generationStarted(int totalTasks) {
-    }
-
+    @Override
     public void introspectionStarted(int totalTasks) {
+
     }
 
+    @Override
+    public void generationStarted(int totalTasks) {
+
+    }
+
+    @Override
     public void saveStarted(int totalTasks) {
+
     }
 
+    @Override
     public void startTask(String taskName) {
+
     }
 
-    public void checkCancel() throws InterruptedException {
-    }
-
+    @Override
     public void done() {
+
+    }
+
+    @Override
+    public void checkCancel() throws InterruptedException {
+
     }
 }
