@@ -10,3 +10,6 @@
     
 ##删除jdbcType
     MyBatis3FormattingUtilities.getParameterClause
+    
+##修改xml文件
+    XMLMapperGenerator
