@@ -60,12 +60,12 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
                 introspectedTable.getMyBatis3JavaMapperType());
         Interface interfaze = new Interface(type);
         interfaze.setVisibility(JavaVisibility.PUBLIC);
-        interfaze.addJavaDocLine(commentGenerator.addJavaDocLine(interfaze.getType().getShortName()));
+        interfaze.addJavaDocLine(commentGenerator.addJavaFunctionLine(interfaze.getType().getShortName()));
 
-        addDeleteByExampleMethod(interfaze);
-        addInsertMethod(interfaze);
         addSelectByPrimaryKeyMethod(interfaze);
+        addInsertMethod(interfaze);
         addUpdateByExampleSelectiveMethod(interfaze);
+        addDeleteByExampleMethod(interfaze);
 
         List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
         if (context.getPlugins().clientGenerated(interfaze, null,

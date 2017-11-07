@@ -66,10 +66,10 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
 
         context.getCommentGenerator().addRootComment(answer);
 
-        addInsertElement(answer);
-        addDeleteByParam(answer);
-        addUpdateByParam(answer);
         addSelectByPrimaryKeyElement(answer);
+        addInsertElement(answer);
+        addUpdateByParam(answer);
+        addDeleteByParam(answer);
 
         return answer;
     }

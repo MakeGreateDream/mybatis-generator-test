@@ -153,7 +153,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
         innerClass.addJavaDocLine("import io.swagger.annotations.ApiModelProperty;");
         innerClass.addJavaDocLine("import lombok.*;");
 
-        innerClass.addJavaDocLine(addJavaDocLine(introspectedTable.getFullyQualifiedTable()));
+        innerClass.addJavaDocLine(addJavaFunctionLine(introspectedTable.getFullyQualifiedTable()));
 
         /** 增加类注解**/
         innerClass.addJavaDocLine("@Getter");
@@ -287,15 +287,20 @@ public class DefaultCommentGenerator implements CommentGenerator {
     public String addJavaDocLine(Object str){
         String nextLine = System.getProperty("line.separator");
         StringBuilder sb = new StringBuilder();
-        sb.append("/**" + nextLine);
-        OutputUtilities.javaIndent(sb,1);
-        sb.append("*" + nextLine);
-        OutputUtilities.javaIndent(sb,1);
-        sb.append("* @author " + ShellRunner.AUTHOR + nextLine);
-        OutputUtilities.javaIndent(sb,1);
-        sb.append("* @Date " + DateTimeUtils.dateTimeSty() + nextLine);
-        OutputUtilities.javaIndent(sb,1);
-        sb.append("*/");
+        sb.append(nextLine + "    /**" + nextLine);
+        sb.append("     * @author " + ShellRunner.AUTHOR + nextLine);
+        sb.append("     * @Date " + DateTimeUtils.dateTimeSty() + nextLine);
+        sb.append("     */");
+        return sb.toString();
+    }
+
+    public String addJavaFunctionLine(Object str){
+        String nextLine = System.getProperty("line.separator");
+        StringBuilder sb = new StringBuilder();
+        sb.append(nextLine + "/**" + nextLine);
+        sb.append(" * @author " + ShellRunner.AUTHOR + nextLine);
+        sb.append(" * @Date " + DateTimeUtils.dateTimeSty() + nextLine);
+        sb.append(" */");
         return sb.toString();
     }
 

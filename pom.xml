@@ -1,62 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.mybatis.generator</groupId>
-    <artifactId>mybatis-generator</artifactId>
-    <version>1.3.2</version>
-  </parent>
+    <parent>
+        <groupId>org.mybatis.generator</groupId>
+        <artifactId>mybatis-generator</artifactId>
+        <version>1.3.2</version>
+    </parent>
 
-  <groupId>org.mybatis.generator</groupId>
-  <artifactId>mybatis-generator-core</artifactId>
-  <version>1.3.2-fix</version>
-  <packaging>jar</packaging>
+    <groupId>com.maidao</groupId>
+    <artifactId>maidao-mybatis-generator-core</artifactId>
+    <version>1.0.0-RELEASE</version>
+    <packaging>jar</packaging>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
-  <build>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
 
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
-          <encoding>UTF-8</encoding>
-        </configuration>
-      </plugin>
+        </plugins>
+    </build>
 
-    </plugins>
-  </build>
-  
 
-  <dependencies>
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <scope>provided</scope>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.35</version>
-    </dependency>
+    <dependencies>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.35</version>
+        </dependency>
 
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-    </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+            <version>1.16.10</version>
+        </dependency>
 
-  </dependencies>
+    </dependencies>
 
+    <distributionManagement>
+        <repository>
+            <id>new-nexus-releases</id>
+            <name>Releases</name>
+            <url>http://192.168.1.200:8081/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>new-nexus-snapshots</id>
+            <name>Internal Snapshot</name>
+            <url>http://192.168.1.200:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>

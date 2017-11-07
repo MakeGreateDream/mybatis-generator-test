@@ -101,13 +101,13 @@ public class ExampleGenerator extends AbstractJavaGenerator {
                 introspectedTable.getServiceType());
         Interface interfazeService = new Interface(serviceType);
         interfazeService.setVisibility(JavaVisibility.PUBLIC);
-        interfazeService.addJavaDocLine(commentGenerator.addJavaDocLine(interfazeService.getType().getShortName()));
+        interfazeService.addJavaDocLine(commentGenerator.addJavaFunctionLine(interfazeService.getType().getShortName()));
 
         /** 添加方法**/
-        addDeleteByExampleMethod(interfazeService);
-        addInsertMethod(interfazeService);
         addSelectByPrimaryKeyMethod(interfazeService);
+        addInsertMethod(interfazeService);
         addUpdateByExampleSelectiveMethod(interfazeService);
+        addDeleteByExampleMethod(interfazeService);
 
         return interfazeService;
     }
@@ -125,7 +125,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         FullyQualifiedJavaType type = new FullyQualifiedJavaType(
                 introspectedTable.getServiceImplType());
         TopLevelClass topLevelClass = new TopLevelClass(type);
-        topLevelClass.addJavaDocLine(commentGenerator.addJavaDocLine(type.getShortName()));
+        topLevelClass.addJavaDocLine(commentGenerator.addJavaFunctionLine(type.getShortName()));
 
         String rootInterfaceService = introspectedTable.getServiceType();
         if (!stringHasValue(rootInterfaceService)) {

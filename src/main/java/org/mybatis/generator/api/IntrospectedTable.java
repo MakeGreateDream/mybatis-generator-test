@@ -807,9 +807,9 @@ public abstract class IntrospectedTable {
         setSqlMapAliasedFullyQualifiedRuntimeTableName(calculateSqlMapAliasedFullyQualifiedRuntimeTableName());
 
         setInsertStatementId("insert");
-        setSelectStatementId("selectByPrimaryKey");
-        setUpdateStatementId("updateByParam");
-        setDeleteStatementId("deleteByParam");
+        setSelectStatementId("select");
+        setUpdateStatementId("update");
+        setDeleteStatementId("delete");
 
         setCountByExampleStatementId("countByExample");
         setDeleteByExampleStatementId("deleteByExample");
