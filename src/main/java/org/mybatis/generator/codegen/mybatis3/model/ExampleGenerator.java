@@ -55,7 +55,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 
     /**
      *构建需要的类
-     *
+     * TODO 增加方法
      *@author: Weiyf
      *Date: 2017/11/2 17:43
      */
@@ -73,7 +73,6 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 
         /** 生成service接口类**/
         Interface interfazeService = createService(table,commentGenerator);
-
 
         /** 生成serviceImpl类**/
         TopLevelClass topLevelClass = createServiceImpl(table,commentGenerator,interfazeService);
@@ -122,6 +121,11 @@ public class ExampleGenerator extends AbstractJavaGenerator {
     private TopLevelClass createServiceImpl(FullyQualifiedTable table,
                                             DefaultCommentGenerator commentGenerator,
                                             Interface interfazeService){
+        /** TODO mapper接口名**/
+        char[] ch = new FullyQualifiedJavaType(introspectedTable.getMyBatis3JavaMapperType()).getShortName().toCharArray();
+        ch[0] += 32;
+        String mapperName = String.valueOf(ch);
+
         FullyQualifiedJavaType type = new FullyQualifiedJavaType(
                 introspectedTable.getServiceImplType());
         TopLevelClass topLevelClass = new TopLevelClass(type);
@@ -154,7 +158,9 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         field.addAnnotation("@Autowried");
         field.setVisibility(JavaVisibility.PUBLIC);
         field.setType(new FullyQualifiedJavaType(introspectedTable.getMyBatis3JavaMapperType()));
-        field.setName("mapper"); //$NON-NLS-1$
+
+        /** TODO 设置mapper接口方法别名**/
+        field.setName(mapperName);
         commentGenerator.addFieldComment(field, introspectedTable);
         topLevelClass.addField(field);
 

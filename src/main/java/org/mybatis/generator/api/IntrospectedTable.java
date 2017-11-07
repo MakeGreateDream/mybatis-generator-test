@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
@@ -1372,6 +1373,11 @@ public abstract class IntrospectedTable {
             return;
         }
 
+        /** 设置包名**/
+        char[] ch = fullyQualifiedTable.getDomainObjectName().toCharArray();
+        ch[0] += 32;
+        String packageName = String.valueOf(ch);
+
         StringBuilder sb = new StringBuilder();
         sb.append(calculateJavaClientImplementationPackage());
         sb.append('.');
@@ -1389,6 +1395,7 @@ public abstract class IntrospectedTable {
         sb.setLength(0);
         sb.append(calculateJavaClientInterfacePackage());
         sb.append('.');
+        sb.append(packageName + '.');
         if (stringHasValue(tableConfiguration.getMapperName())) {
             sb.append(tableConfiguration.getMapperName());
         } else {
@@ -1426,10 +1433,15 @@ public abstract class IntrospectedTable {
     }
 
     /**
-     * Calculate model attributes.
+     * TODO 更改文件名、文件所在包
      */
     protected void calculateModelAttributes() {
         String pakkage = calculateJavaModelPackage();
+
+        /** 类驼峰名**/
+        char[] ch = fullyQualifiedTable.getDomainObjectName().toCharArray();
+        ch[0] += 32;
+        String pkName = String.valueOf(ch);
 
         StringBuilder sb = new StringBuilder();
         sb.append(pakkage);
@@ -1441,6 +1453,7 @@ public abstract class IntrospectedTable {
         sb.setLength(0);
         sb.append(pakkage);
         sb.append('.');
+        sb.append("model.po.");
         sb.append(fullyQualifiedTable.getDomainObjectName());
         sb.append("Po");
         setBaseRecordType(sb.toString());
@@ -1448,6 +1461,7 @@ public abstract class IntrospectedTable {
         sb.setLength(0);
         sb.append(pakkage);
         sb.append('.');
+        sb.append("service." + pkName + ".");
         sb.append(fullyQualifiedTable.getDomainObjectName());
         sb.append("Service");
         setServiceType(sb.toString());
@@ -1462,6 +1476,7 @@ public abstract class IntrospectedTable {
         sb.setLength(0);
         sb.append(pakkage);
         sb.append('.');
+        sb.append("service." + pkName + ".impl.");
         sb.append(fullyQualifiedTable.getDomainObjectName());
         sb.append("ServiceImpl");
         setServiceImplType(sb.toString());
@@ -1473,14 +1488,21 @@ public abstract class IntrospectedTable {
      * @return the string
      */
     protected String calculateSqlMapPackage() {
+
+        /** TODO 获取包路径**/
+        char[] ch = tableConfiguration.getDomainObjectName().toCharArray();
+        ch[0] += 32;
+        String pkName = String.valueOf(ch);
+
         StringBuilder sb = new StringBuilder();
         SqlMapGeneratorConfiguration config = context
                 .getSqlMapGeneratorConfiguration();
 
-        // config can be null if the Java client does not require XML
         if (config != null) {
             sb.append(config.getTargetPackage());
             sb.append(fullyQualifiedTable.getSubPackageForClientOrSqlMap(isSubPackagesEnabled(config)));
+            /** TODO 更改xml文件包路径**/
+            sb.append("." + pkName + ".");
             if (stringHasValue(tableConfiguration.getMapperName())) {
                 String mapperName = tableConfiguration.getMapperName();
                 int ind = mapperName.lastIndexOf('.');
