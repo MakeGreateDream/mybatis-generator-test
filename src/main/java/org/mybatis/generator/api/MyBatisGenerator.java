@@ -24,11 +24,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
+import com.mysql.jdbc.StringUtils;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.MergeConstants;
@@ -186,6 +184,13 @@ public class MyBatisGenerator {
             Set<String> fullyQualifiedTableNames) throws SQLException,
             IOException, InterruptedException {
 
+        /** 已生成文件名**/
+        List<String> createFileName = new ArrayList<>();
+        /** 已覆盖文件名**/
+        List<String> overWriteFileName = new ArrayList<>();
+        /** 未生成文件名**/
+        List<String> notCreateFileName = new ArrayList<>();
+
         if (callback == null) {
             callback = new NullProgressCallback();
         }
@@ -244,29 +249,51 @@ public class MyBatisGenerator {
             projects.add(gxf.getTargetProject());
 
             File targetFile;
-            String source;
+            String source = null;
             try {
                 File directory = shellCallback.getDirectory(gxf
                         .getTargetProject(), gxf.getTargetPackage());
                 targetFile = new File(directory, gxf.getFileName());
-                if (targetFile.exists()) {
-                    if (gxf.isMergeable()) {
-                        source = XmlFileMergerJaxp.getMergedSource(gxf,
-                                targetFile);
-                    } else if (shellCallback.isOverwriteEnabled()) {
-                        source = gxf.getFormattedContent();
-                        warnings.add(getString("Warning.11", 
-                                targetFile.getAbsolutePath()));
-                    } else {
-                        source = gxf.getFormattedContent();
-                        targetFile = getUniqueFileName(directory, gxf
-                                .getFileName());
-                        warnings.add(getString(
-                                "Warning.2", targetFile.getAbsolutePath())); 
+
+                if(targetFile.exists()){
+
+                    /** TODO xml文件已存在提示选择是否覆盖**/
+                    System.out.println(targetFile + "已存在，是否覆盖? (1 | 0)");
+                    Scanner scanner = new Scanner(System.in);
+
+                    while(!scanner.hasNext()){
+                        Thread.sleep(100);
+                    }
+
+                    String input = scanner.next();
+
+                    if("0".equals(input)){
+                        notCreateFileName.add(targetFile.getCanonicalPath());
+                        continue;
+                    } else if("1".equals(input)) {
+
+                        if (gxf.isMergeable()) {
+                            source = gxf.getFormattedContent();
+
+                            //xml文件追加
+                            /*source = XmlFileMergerJaxp.getMergedSource(gxf,
+                                    targetFile);*/
+                        } else if (shellCallback.isOverwriteEnabled()) {
+                            source = gxf.getFormattedContent();
+                            warnings.add(getString("Warning.11",
+                                    targetFile.getAbsolutePath()));
+                        } else {
+                            source = gxf.getFormattedContent();
+                            targetFile = getUniqueFileName(directory, gxf
+                                    .getFileName());
+                            warnings.add(getString(
+                                    "Warning.2", targetFile.getAbsolutePath()));
+                        }
                     }
                 } else {
                     source = gxf.getFormattedContent();
                 }
+
             } catch (ShellException e) {
                 warnings.add(e.getMessage());
                 continue;
@@ -274,37 +301,55 @@ public class MyBatisGenerator {
 
             callback.checkCancel();
             callback.startTask(getString(
-                    "Progress.15", targetFile.getName())); 
-            writeFile(targetFile, source, "UTF-8"); 
+                    "Progress.15", targetFile.getName()));
+            writeFile(targetFile, source, "UTF-8");
         }
 
         for (GeneratedJavaFile gjf : generatedJavaFiles) {
             projects.add(gjf.getTargetProject());
 
             File targetFile;
-            String source;
+            String source = null;
             try {
                 File directory = shellCallback.getDirectory(gjf
                         .getTargetProject(), gjf.getTargetPackage());
+
                 targetFile = new File(directory, gjf.getFileName());
                 if (targetFile.exists()) {
-                    if (shellCallback.isMergeSupported()) {
-                        source = shellCallback.mergeJavaFile(gjf
-                                .getFormattedContent(), targetFile
-                                .getAbsolutePath(),
-                                MergeConstants.OLD_ELEMENT_TAGS,
-                                gjf.getFileEncoding());
-                    } else if (shellCallback.isOverwriteEnabled()) {
-                        source = gjf.getFormattedContent();
-                        warnings.add(getString("Warning.11", 
-                                targetFile.getAbsolutePath()));
-                    } else {
-                        source = gjf.getFormattedContent();
-                        targetFile = getUniqueFileName(directory, gjf
-                                .getFileName());
-                        warnings.add(getString(
-                                "Warning.2", targetFile.getAbsolutePath())); 
+
+                    /** TODO java文件已存在提示选择是否覆盖**/
+                    System.out.println(targetFile + "已存在，是否覆盖? (1 | 0)");
+                    Scanner scanner = new Scanner(System.in);
+
+                    while(!scanner.hasNext()){
+                        Thread.sleep(100);
                     }
+
+                    String input = scanner.next();
+
+                    if("0".equals(input)) {
+                        System.out.println("停止生成" + targetFile + "文件》》》");
+                        continue;
+                    } else if("1".equals(input)){
+                        if (shellCallback.isMergeSupported()) {
+                            source = shellCallback.mergeJavaFile(gjf
+                                            .getFormattedContent(), targetFile
+                                            .getAbsolutePath(),
+                                    MergeConstants.OLD_ELEMENT_TAGS,
+                                    gjf.getFileEncoding());
+                        } else if (shellCallback.isOverwriteEnabled()) {
+                            source = gjf.getFormattedContent();
+                            warnings.add(getString("Warning.11",
+                                    targetFile.getAbsolutePath()));
+                        } else {
+                            source = gjf.getFormattedContent();
+                            targetFile = getUniqueFileName(directory, gjf
+                                    .getFileName());
+                            warnings.add(getString(
+                                    "Warning.2", targetFile.getAbsolutePath()));
+                        }
+                    }
+
                 } else {
                     source = gjf.getFormattedContent();
                 }
@@ -337,18 +382,38 @@ public class MyBatisGenerator {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    private void writeFile(File file, String content, String fileEncoding) throws IOException {
-        FileOutputStream fos = new FileOutputStream(file, false);
-        OutputStreamWriter osw;
-        if (fileEncoding == null) {
-            osw = new OutputStreamWriter(fos);
-        } else {
-            osw = new OutputStreamWriter(fos, fileEncoding);
+    private void writeFile(File file, String content, String fileEncoding){
+
+        FileOutputStream fos = null;
+        OutputStreamWriter osw  = null;
+        try {
+
+            fos = new FileOutputStream(file, false);
+            if (fileEncoding == null) {
+                osw = new OutputStreamWriter(fos);
+            } else {
+                osw = new OutputStreamWriter(fos, fileEncoding);
+            }
+
+            BufferedWriter bw = new BufferedWriter(osw);
+            bw.write(content);
+            bw.close();
+
+        } catch (IOException e){
+            System.out.println("生成" + file.getName() + "异常!!!");
+        } finally {
+
+            try {
+                if(fos != null){
+                    fos.close();
+                }
+                if(osw != null){
+                    osw.close();
+                }
+            } catch (IOException e) {
+                System.out.println("关闭IO流失败");
+            }
         }
-        
-        BufferedWriter bw = new BufferedWriter(osw);
-        bw.write(content);
-        bw.close();
     }
 
     /**

@@ -171,7 +171,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
             newMethod.setName(method.getName());
             newMethod.setReturnType(method.getReturnType());
 
-            String bodyLine = "return mapper." + newMethod.getName();
+            String bodyLine = "return " + mapperName + "." + newMethod.getName();
 
             String paramStr = null;
             for(Parameter param : method.getParameters()){

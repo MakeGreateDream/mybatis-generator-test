@@ -15,7 +15,8 @@
  */
 package org.mybatis.generator.api;
 
-import org.mybatis.generator.config.Configuration;
+import com.mysql.jdbc.StringUtils;
+import org.mybatis.generator.config.*;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.XMLParserException;
@@ -24,13 +25,12 @@ import org.mybatis.generator.internal.DefaultShellCallback;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 /**
- * This class allows the code generator to be run from the command line.
+ * TODO 启动方法
  * 
  * @author Jeff Butler
  */
@@ -45,27 +45,129 @@ public class ShellRunner {
     private static final boolean VERBOSE = false ;
 
     /** 作者**/
-    public static final String AUTHOR = "xxx";
+    public static String AUTHOR = "xxx";
 
-    public static void main(String[] args) {
+    /** jdbcDriver**/
+    private static final String JDBC_CLASS = "com.mysql.jdbc.Driver";
 
-        if (isBlank(CONFIG_FILE)) {
-            writeLine(getString("RuntimeError.0")); 
+    /** 默认表名分隔符，用于生成表别名**/
+    private static final String DELIMITER = "_";
+
+     public static void main(String[] args){
+         SimplConfiguration simplConfiguration = new SimplConfiguration();
+         simplConfiguration.setAuthor("weiyf");
+         simplConfiguration.setConnectionURL("jdbc:mysql://localhost:3306/test");
+         simplConfiguration.setUserId("root");
+         simplConfiguration.setPassword("1234");
+         simplConfiguration.setTableName("account_card,account");
+
+         simplConfiguration.setModelTargetPackage("com.maidao");
+         simplConfiguration.setMapperTargetPackage("com.maidao.dao");
+         simplConfiguration.setXmlTargetPackage("com.maidao.dao");
+         simplConfiguration.setMapperTargetProject("src");
+         simplConfiguration.setModelTargetProject("src");
+         simplConfiguration.setXmlTargetProject("src");
+
+         run(simplConfiguration);
+      }
+
+    /** 启动方法**/
+    public static void run(SimplConfiguration simplConfiguration) {
+
+        /** 赋值**/
+        AUTHOR = simplConfiguration.getAuthor();
+
+        if (!new File(CONFIG_FILE).exists()) {
+            writeLine(getString("My.ErrorMsg.1"));
             return;
         }
 
         List<String> warnings = new ArrayList<String>();
 
-        String configfile = CONFIG_FILE;
-        File configurationFile = new File(configfile);
+        File configurationFile = new File(CONFIG_FILE);
         if (!configurationFile.exists()) {
-            writeLine(getString("RuntimeError.1", configfile)); 
+            writeLine(getString("RuntimeError.1", CONFIG_FILE));
             return;
         }
 
         try {
-            ConfigurationParser cp = new ConfigurationParser(warnings);
-            Configuration config = cp.parseConfiguration(configurationFile);
+            /** 第一个context里存放的是配置相关内容**/
+            Context context = new Context(ModelType.CONDITIONAL);
+
+            /** 1.数据库配置**/
+            JDBCConnectionConfiguration jdbcConfig = new JDBCConnectionConfiguration();
+            jdbcConfig.setDriverClass(JDBC_CLASS);
+            jdbcConfig.setConnectionURL(simplConfiguration.getConnectionURL());
+            jdbcConfig.setUserId(simplConfiguration.getUserId());
+            jdbcConfig.setPassword(simplConfiguration.getPassword());
+            context.setJdbcConnectionConfiguration(jdbcConfig);
+
+            /** 2.表配置**/
+            List<TableConfiguration> tables = new ArrayList<>();
+            String[] tableNames = simplConfiguration.getTableName().split(",");
+
+            for(int i=0; i<tableNames.length; i++){
+                String tableName = tableNames[i];
+
+                /** 2.1设置表昵称**/
+                String nickName = "";
+                for(String nick : tableName.split(DELIMITER)){
+                    if(StringUtils.isNullOrEmpty(nick)){
+                        continue;
+                    }
+                    char[] nickChar = nick.toCharArray();
+                    nickChar[0] -= 32;
+                    nickName += String.valueOf(nickChar);
+                }
+                TableConfiguration tableConfiguration = new TableConfiguration(new Context(ModelType.CONDITIONAL));
+
+                tableConfiguration.setTableName(tableName);
+                tableConfiguration.setDomainObjectName(nickName);
+                tables.add(tableConfiguration);
+            }
+            context.setTableConfiguration(tables);
+
+            /** 3.Mapper文件生成路径配置**/
+            SqlMapGeneratorConfiguration sqlMapConfig = new SqlMapGeneratorConfiguration();
+            sqlMapConfig.setTargetPackage(simplConfiguration.getMapperTargetPackage());
+            sqlMapConfig.setTargetProject(simplConfiguration.getMapperTargetProject());
+            sqlMapConfig.addProperty("enableSubPackages","true");
+
+            context.setSqlMapGeneratorConfiguration(sqlMapConfig);
+
+            /** 4.javaModel文件生成路径配置**/
+            JavaModelGeneratorConfiguration javaModelConfig = new JavaModelGeneratorConfiguration();
+            javaModelConfig.setTargetPackage(simplConfiguration.getModelTargetPackage());
+            javaModelConfig.setTargetProject(simplConfiguration.getModelTargetProject());
+            javaModelConfig.addProperty("trimStrings","true");
+            javaModelConfig.addProperty("enableSubPackages","true");
+
+            context.setJavaModelGeneratorConfiguration(javaModelConfig);
+
+            /** 5.xml文件生成路径配置**/
+            JavaClientGeneratorConfiguration javaClientConfig = new JavaClientGeneratorConfiguration();
+            javaClientConfig.setTargetPackage(simplConfiguration.getXmlTargetPackage());
+            javaClientConfig.setTargetProject(simplConfiguration.getXmlTargetProject());
+            javaClientConfig.setConfigurationType("XMLMAPPER");
+            javaClientConfig.addProperty("enableSubPackages","true");
+            context.setJavaClientGeneratorConfiguration(javaClientConfig);
+
+            /** 6.java类解析器配置**/
+            JavaTypeResolverConfiguration javaTypeConfig = new JavaTypeResolverConfiguration();
+            javaTypeConfig.addProperty("forceBigDecimals","false");
+            context.setJavaTypeResolverConfiguration(javaTypeConfig);
+
+            /** 7.其他项配置**/
+            context.setId("DB2Tables");
+            context.setBeginningDelimiter("\"");
+            context.setEndingDelimiter("\"");
+            context.setTargetRuntime("Mybatis3");
+
+
+            /** 初始化配置对象**/
+            Configuration config = new Configuration();
+            config.addContext(context);
+
 
             DefaultShellCallback shellCallback = new DefaultShellCallback(OVERWRITE);
 
@@ -75,19 +177,11 @@ public class ShellRunner {
 
             myBatisGenerator.generate(progressCallback, null, null);
 
-        } catch (XMLParserException e) {
-            writeLine(getString("Progress.3")); 
-            writeLine();
-            for (String error : e.getErrors()) {
-                writeLine(error);
-            }
-
-            return;
         } catch (SQLException e) {
-            e.printStackTrace();
+            writeLine("SQL异常，e" + e);
             return;
         } catch (IOException e) {
-            e.printStackTrace();
+            writeLine("IO异常，e" + e);
             return;
         } catch (InvalidConfigurationException e) {
             writeLine(getString("Progress.16")); 
@@ -96,6 +190,8 @@ public class ShellRunner {
             }
             return;
         } catch (InterruptedException e) {
+            writeLine(e.getMessage());
+        } catch (RuntimeException e){
             writeLine(e.getMessage());
         }
 

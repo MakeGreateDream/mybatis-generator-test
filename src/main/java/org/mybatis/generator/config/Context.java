@@ -135,6 +135,14 @@ public class Context extends PropertyHolder {
         tableConfigurations.add(tc);
     }
 
+    public void setTableConfiguration(List<TableConfiguration> tc) {
+        if(tc == null){
+            tableConfigurations.clear();
+        } else {
+            tableConfigurations.addAll(tc);
+        }
+    }
+
     /**
      * Gets the jdbc connection configuration.
      *
@@ -332,6 +340,10 @@ public class Context extends PropertyHolder {
         return defaultModelType;
     }
 
+    public void setDefaultModelType(ModelType type) {
+        defaultModelType = type;
+    }
+
     /**
      * Builds an XmlElement representation of this context. Note that the XML
      * may not necessarily validate if the context is invalid. Call the
@@ -415,6 +427,10 @@ public class Context extends PropertyHolder {
         return beginningDelimiter;
     }
 
+    public void setBeginningDelimiter(String str) {
+        beginningDelimiter = str;
+    }
+
     /**
      * Gets the ending delimiter.
      *
@@ -422,6 +438,10 @@ public class Context extends PropertyHolder {
      */
     public String getEndingDelimiter() {
         return endingDelimiter;
+    }
+
+    public void setEndingDelimiter(String str) {
+         endingDelimiter = str;
     }
 
     /* (non-Javadoc)

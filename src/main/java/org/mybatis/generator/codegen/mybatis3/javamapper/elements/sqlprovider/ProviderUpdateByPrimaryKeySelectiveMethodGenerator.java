@@ -63,7 +63,7 @@ public class ProviderUpdateByPrimaryKeySelectiveMethodGenerator extends
         Method method = new Method(introspectedTable.getUpdateByPrimaryKeySelectiveStatementId());
         method.setReturnType(FullyQualifiedJavaType.getStringInstance());
         method.setVisibility(JavaVisibility.PUBLIC);
-        method.addParameter(new Parameter(fqjt, "record")); //$NON-NLS-1$
+//        method.addParameter(new Parameter(fqjt, "record")); //$NON-NLS-1$
         
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);
