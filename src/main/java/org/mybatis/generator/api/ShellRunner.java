@@ -74,17 +74,13 @@ public class ShellRunner {
     /** 启动方法**/
     public static void run(SimplConfiguration simplConfiguration) {
 
-        /** 赋值**/
-        AUTHOR = simplConfiguration.getAuthor();
-
         List<String> warnings = new ArrayList<String>();
-        File configurationFile = new File(CONFIG_FILE);
-        if (!configurationFile.exists()) {
-            writeLine(getString("RuntimeError.1", CONFIG_FILE));
-            return;
-        }
 
         try {
+
+            /** 赋值**/
+            AUTHOR = simplConfiguration.getAuthor();
+
             /** 第一个context里存放的是配置相关内容**/
             Context context = new Context(ModelType.CONDITIONAL);
 
