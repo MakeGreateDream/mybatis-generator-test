@@ -77,13 +77,7 @@ public class ShellRunner {
         /** 赋值**/
         AUTHOR = simplConfiguration.getAuthor();
 
-        if (!new File(CONFIG_FILE).exists()) {
-            writeLine(getString("My.ErrorMsg.1"));
-            return;
-        }
-
         List<String> warnings = new ArrayList<String>();
-
         File configurationFile = new File(CONFIG_FILE);
         if (!configurationFile.exists()) {
             writeLine(getString("RuntimeError.1", CONFIG_FILE));
