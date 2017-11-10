@@ -48,16 +48,13 @@ public class SimplConfiguration {
     /** 表名,多个表用英文半角逗号分隔**/
     private String tableName;
 
-    /** 表别名,多个表用英文半角逗号分隔**/
-    private String tableNickName;
-
     /** model包名 只定义基础包名即可，其他包名会自动生成**/
     private String modelTargetPackage;
 
-    /** mapper包名**/
+    /** mapper包名,设置model包名时自动生成**/
     private String mapperTargetPackage;
 
-    /** xml包名**/
+    /** xml包名,设置model包名时自动生成**/
     private String xmlTargetPackage;
 
     /** 生成文件的目标项目路径（绝对路径）**/
@@ -103,36 +100,22 @@ public class SimplConfiguration {
         this.tableName = tableName;
     }
 
-    public String getTableNickName() {
-        return tableNickName;
-    }
-
-    public void setTableNickName(String tableNickName) {
-        this.tableNickName = tableNickName;
-    }
-
     public String getModelTargetPackage() {
         return modelTargetPackage;
     }
 
     public void setModelTargetPackage(String modelTargetPackage) {
         this.modelTargetPackage = modelTargetPackage;
+        this.mapperTargetPackage = modelTargetPackage + ".dao";
+        this.xmlTargetPackage = modelTargetPackage + ".dao";
     }
 
     public String getMapperTargetPackage() {
         return mapperTargetPackage;
     }
 
-    public void setMapperTargetPackage(String mapperTargetPackage) {
-        this.mapperTargetPackage = mapperTargetPackage;
-    }
-
     public String getXmlTargetPackage() {
         return xmlTargetPackage;
-    }
-
-    public void setXmlTargetPackage(String xmlTargetPackage) {
-        this.xmlTargetPackage = xmlTargetPackage;
     }
 
     public String getTargetProject() {

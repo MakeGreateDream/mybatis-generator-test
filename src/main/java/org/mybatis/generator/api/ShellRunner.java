@@ -36,9 +36,6 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
  */
 public class ShellRunner {
 
-    /** 配置文件路径**/
-    private static final String CONFIG_FILE = System.getProperty("user.dir") + "\\config.xml";
-
     /**是否覆盖已存在的文件**/
     private static final boolean OVERWRITE = true;
 
@@ -59,11 +56,9 @@ public class ShellRunner {
          simplConfiguration.setConnectionURL("jdbc:mysql://localhost:3306/test");
          simplConfiguration.setUserId("root");
          simplConfiguration.setPassword("1234");
-         simplConfiguration.setTableName("account_card,account");
+         simplConfiguration.setTableName("account");
 
-         simplConfiguration.setModelTargetPackage("com.maidao");
-         simplConfiguration.setMapperTargetPackage("com.maidao.dao");
-         simplConfiguration.setXmlTargetPackage("com.maidao.dao");
+         simplConfiguration.setModelTargetPackage("com.test");
 
          /** 多个项目在同一组时，只到组的路径**/
          String targetProject = System.getProperty("user.dir") + "\\src";

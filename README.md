@@ -1,5 +1,5 @@
 ﻿#修改笔记
-
+    
 ##新增生成类 
     ExampleGenerator类中增加相应方法
 
@@ -17,3 +17,24 @@
     
 ##启动方法
     ShellRun
+    
+    
+##生成的代码格式
+    例：
+    -com
+      -test
+        -dao
+          -account
+            AccountMapper.java
+            AccountMapper.xml
+            
+        -model
+          -po
+            -account
+              -AccountPo.java
+              
+        -service
+          -account
+            -impl
+              AccountServiceImpl.java
+            AccountService.java

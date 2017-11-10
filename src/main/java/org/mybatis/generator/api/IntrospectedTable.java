@@ -1454,6 +1454,7 @@ public abstract class IntrospectedTable {
         sb.append(pakkage);
         sb.append('.');
         sb.append("model.po.");
+        sb.append(pkName + ".");
         sb.append(fullyQualifiedTable.getDomainObjectName());
         sb.append("Po");
         setBaseRecordType(sb.toString());
