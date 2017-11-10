@@ -53,7 +53,7 @@ public class ShellRunner {
     /** 默认表名分隔符，用于生成表别名**/
     private static final String DELIMITER = "_";
 
-     public static void main(String[] args){
+     public static void main(String[] args) throws IOException {
          SimplConfiguration simplConfiguration = new SimplConfiguration();
          simplConfiguration.setAuthor("weiyf");
          simplConfiguration.setConnectionURL("jdbc:mysql://localhost:3306/test");
@@ -64,9 +64,11 @@ public class ShellRunner {
          simplConfiguration.setModelTargetPackage("com.maidao");
          simplConfiguration.setMapperTargetPackage("com.maidao.dao");
          simplConfiguration.setXmlTargetPackage("com.maidao.dao");
-         simplConfiguration.setMapperTargetProject("src");
-         simplConfiguration.setModelTargetProject("src");
-         simplConfiguration.setXmlTargetProject("src");
+
+         /** 多个项目在同一组时，只到组的路径**/
+         String targetProject = System.getProperty("user.dir") + "\\src";
+
+         simplConfiguration.setTargetProject(targetProject);
 
          run(simplConfiguration);
       }
@@ -120,7 +122,7 @@ public class ShellRunner {
             /** 3.Mapper文件生成路径配置**/
             SqlMapGeneratorConfiguration sqlMapConfig = new SqlMapGeneratorConfiguration();
             sqlMapConfig.setTargetPackage(simplConfiguration.getMapperTargetPackage());
-            sqlMapConfig.setTargetProject(simplConfiguration.getMapperTargetProject());
+            sqlMapConfig.setTargetProject(simplConfiguration.getTargetProject());
             sqlMapConfig.addProperty("enableSubPackages","true");
 
             context.setSqlMapGeneratorConfiguration(sqlMapConfig);
@@ -128,7 +130,7 @@ public class ShellRunner {
             /** 4.javaModel文件生成路径配置**/
             JavaModelGeneratorConfiguration javaModelConfig = new JavaModelGeneratorConfiguration();
             javaModelConfig.setTargetPackage(simplConfiguration.getModelTargetPackage());
-            javaModelConfig.setTargetProject(simplConfiguration.getModelTargetProject());
+            javaModelConfig.setTargetProject(simplConfiguration.getTargetProject());
             javaModelConfig.addProperty("trimStrings","true");
             javaModelConfig.addProperty("enableSubPackages","true");
 
@@ -137,7 +139,7 @@ public class ShellRunner {
             /** 5.xml文件生成路径配置**/
             JavaClientGeneratorConfiguration javaClientConfig = new JavaClientGeneratorConfiguration();
             javaClientConfig.setTargetPackage(simplConfiguration.getXmlTargetPackage());
-            javaClientConfig.setTargetProject(simplConfiguration.getXmlTargetProject());
+            javaClientConfig.setTargetProject(simplConfiguration.getTargetProject());
             javaClientConfig.setConfigurationType("XMLMAPPER");
             javaClientConfig.addProperty("enableSubPackages","true");
             context.setJavaClientGeneratorConfiguration(javaClientConfig);

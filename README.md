@@ -13,3 +13,7 @@
     
 ##修改xml文件
     XMLMapperGenerator
+    
+    
+##启动方法
+    ShellRun

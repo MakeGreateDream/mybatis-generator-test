@@ -51,23 +51,17 @@ public class SimplConfiguration {
     /** 表别名,多个表用英文半角逗号分隔**/
     private String tableNickName;
 
-    /** model目标包名 包名必须已存在**/
-    private String modelTargetProject;
-
     /** model包名 只定义基础包名即可，其他包名会自动生成**/
     private String modelTargetPackage;
-
-    /** mapper目标包名 包名必须已存在**/
-    private String mapperTargetProject;
 
     /** mapper包名**/
     private String mapperTargetPackage;
 
-    /** xml目标包名 包名必须已存在**/
-    private String xmlTargetProject;
-
     /** xml包名**/
     private String xmlTargetPackage;
+
+    /** 生成文件的目标项目路径（绝对路径）**/
+    private String targetProject;
 
     public String getAuthor() {
         return author;
@@ -117,28 +111,12 @@ public class SimplConfiguration {
         this.tableNickName = tableNickName;
     }
 
-    public String getModelTargetProject() {
-        return modelTargetProject;
-    }
-
-    public void setModelTargetProject(String modelTargetProject) {
-        this.modelTargetProject = modelTargetProject;
-    }
-
     public String getModelTargetPackage() {
         return modelTargetPackage;
     }
 
     public void setModelTargetPackage(String modelTargetPackage) {
         this.modelTargetPackage = modelTargetPackage;
-    }
-
-    public String getMapperTargetProject() {
-        return mapperTargetProject;
-    }
-
-    public void setMapperTargetProject(String mapperTargetProject) {
-        this.mapperTargetProject = mapperTargetProject;
     }
 
     public String getMapperTargetPackage() {
@@ -149,19 +127,19 @@ public class SimplConfiguration {
         this.mapperTargetPackage = mapperTargetPackage;
     }
 
-    public String getXmlTargetProject() {
-        return xmlTargetProject;
-    }
-
-    public void setXmlTargetProject(String xmlTargetProject) {
-        this.xmlTargetProject = xmlTargetProject;
-    }
-
     public String getXmlTargetPackage() {
         return xmlTargetPackage;
     }
 
     public void setXmlTargetPackage(String xmlTargetPackage) {
         this.xmlTargetPackage = xmlTargetPackage;
+    }
+
+    public String getTargetProject() {
+        return targetProject;
+    }
+
+    public void setTargetProject(String targetProject) {
+        this.targetProject = targetProject;
     }
 }
