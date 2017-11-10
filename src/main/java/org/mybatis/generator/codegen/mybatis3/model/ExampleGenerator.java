@@ -65,8 +65,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
 
         FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();
-        progressCallback.startTask(getString(
-                "Progress.6", table.toString())); //$NON-NLS-1$
+        progressCallback.startTask(getString("Progress.6", table.toString()));
 
         /** DOC注释生成工具类**/
         DefaultCommentGenerator commentGenerator = new DefaultCommentGenerator();
@@ -144,7 +143,8 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         /** 引入jar包**/
         topLevelClass.addImportedType(introspectedTable.getServiceType());
         topLevelClass.addImportedType(introspectedTable.getMyBatis3JavaMapperType());
-        topLevelClass.addImportedType("javax.annotation.Autowried");
+        topLevelClass.addImportedType(introspectedTable.getBaseRecordType());
+        topLevelClass.addImportedType("org.springframework.beans.factory.annotation.Autowired");
         topLevelClass.addImportedType("org.springframework.stereotype.Service");
 
         /** 增加注解**/
@@ -155,8 +155,8 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 
         /** 引入mapper类**/
         Field field = new Field();
-        field.addAnnotation("@Autowried");
-        field.setVisibility(JavaVisibility.PUBLIC);
+        field.addAnnotation("@Autowired");
+        field.setVisibility(JavaVisibility.PRIVATE);
         field.setType(new FullyQualifiedJavaType(introspectedTable.getMyBatis3JavaMapperType()));
 
         /** TODO 设置mapper接口方法别名**/
@@ -167,6 +167,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         /** 实现父类方法**/
         for(Method method : interfazeService.getMethods()){
             Method newMethod = new Method();
+            newMethod.addAnnotation("@Override");
             newMethod.setVisibility(JavaVisibility.PUBLIC);
             newMethod.setName(method.getName());
             newMethod.setReturnType(method.getReturnType());

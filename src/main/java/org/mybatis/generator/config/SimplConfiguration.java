@@ -57,7 +57,7 @@ public class SimplConfiguration {
     /** xml包名,设置model包名时自动生成**/
     private String xmlTargetPackage;
 
-    /** 生成文件的目标项目路径（绝对路径）**/
+    /** 生成文件的目标项目路径（绝对路径）默认加上 \src\main\java **/
     private String targetProject;
 
     public String getAuthor() {
@@ -123,6 +123,6 @@ public class SimplConfiguration {
     }
 
     public void setTargetProject(String targetProject) {
-        this.targetProject = targetProject;
+        this.targetProject = targetProject + "\\src\\main\\java";
     }
 }

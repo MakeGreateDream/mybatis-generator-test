@@ -42,17 +42,8 @@ public class UpdateByExampleSelectiveMethodGenerator extends
 
         FullyQualifiedJavaType parameterType =
             introspectedTable.getRules().calculateAllFieldsClass();
-//        method.addParameter(new Parameter(parameterType,"record", "@Param(\"record\")"));
+        method.addParameter(new Parameter(parameterType,"record"));
         importedTypes.add(parameterType);
-
-        /*FullyQualifiedJavaType exampleType = new FullyQualifiedJavaType(
-                introspectedTable.getBaseRecordType());
-        method.addParameter(new Parameter(exampleType,
-                "example", "@Param(\"example\")"));
-        importedTypes.add(exampleType);*/
-
-        importedTypes.add(new FullyQualifiedJavaType(
-                "org.apache.ibatis.annotations.Param"));
 
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);

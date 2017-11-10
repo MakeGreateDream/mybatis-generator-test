@@ -58,12 +58,10 @@ public class ShellRunner {
          simplConfiguration.setPassword("1234");
          simplConfiguration.setTableName("account");
 
-         simplConfiguration.setModelTargetPackage("com.test");
+         simplConfiguration.setModelTargetPackage("com.test.cms");
 
          /** 多个项目在同一组时，只到组的路径**/
-         String targetProject = System.getProperty("user.dir") + "\\src";
-
-         simplConfiguration.setTargetProject(targetProject);
+         simplConfiguration.setTargetProject("D:\\project\\test\\test-project");
 
          run(simplConfiguration);
       }
