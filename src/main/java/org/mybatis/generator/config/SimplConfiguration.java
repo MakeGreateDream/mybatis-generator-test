@@ -15,17 +15,7 @@
  */
 package org.mybatis.generator.config;
 
-import org.mybatis.generator.api.dom.xml.Attribute;
-import org.mybatis.generator.api.dom.xml.Document;
-import org.mybatis.generator.api.dom.xml.XmlElement;
-import org.mybatis.generator.codegen.XmlConstants;
-import org.mybatis.generator.exception.InvalidConfigurationException;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
+import java.io.File;
 
 /**
  *
@@ -59,6 +49,13 @@ public class SimplConfiguration {
 
     /** 生成文件的目标项目路径（绝对路径）默认加上 \src\main\java **/
     private String targetProject;
+
+    /** 斜杠**/
+    private static final String slash = File.separator;
+
+    /** 代码生成目录**/
+    private static final String srcMain = slash +"src" + slash + "main" + slash + "java";
+
 
     public String getAuthor() {
         return author;
@@ -123,6 +120,6 @@ public class SimplConfiguration {
     }
 
     public void setTargetProject(String targetProject) {
-        this.targetProject = targetProject + "\\src\\main\\java";
+        this.targetProject = targetProject + srcMain;
     }
 }
