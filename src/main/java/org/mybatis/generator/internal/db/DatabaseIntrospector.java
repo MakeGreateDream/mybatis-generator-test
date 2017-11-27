@@ -215,7 +215,7 @@ public class DatabaseIntrospector {
         }
 
         removeIgnoredColumns(tc, columns);
-        calculateExtraColumnInformation(tc, columns);
+        calculateExtraColumnInformation(tc, columns); //TODO 字段名格式
         applyColumnOverrides(tc, columns);
         calculateIdentityColumns(tc, columns);
 

@@ -106,7 +106,7 @@ public class JavaBeansUtil {
 
     /**
      * Gets the camel case string.
-     *
+     * TODO 字段名格式化
      * @param inputString
      *            the input string
      * @param firstCharacterUppercase
@@ -140,7 +140,9 @@ public class JavaBeansUtil {
                     sb.append(Character.toUpperCase(c));
                     nextUpperCase = false;
                 } else {
-                    sb.append(Character.toLowerCase(c));
+                    //TODO 关闭小写转换，适应驼峰字段名
+                    sb.append(c);
+//                    sb.append(Character.toLowerCase(c));
                 }
                 break;
             }
