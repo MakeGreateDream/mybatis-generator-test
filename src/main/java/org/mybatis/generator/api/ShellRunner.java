@@ -48,26 +48,10 @@ public class ShellRunner {
     /** 默认表名分隔符，用于生成表别名**/
     private static final String DELIMITER = "_";
 
-     public static void main(String[] args) throws IOException {
-         SimplConfiguration simplConfiguration = new SimplConfiguration();
-         simplConfiguration.setAuthor("xxx");
-         simplConfiguration.setConnectionURL("jdbc:mysql://localhost:3306/test");
-         simplConfiguration.setUserId("root");
-         simplConfiguration.setPassword("1234");
-         simplConfiguration.setTableName("account");
-
-         simplConfiguration.setModelTargetPackage("com.test.cms");
-
-         /** 多个项目在同一组时，只到组的路径**/
-         simplConfiguration.setTargetProject("D:\\project\\mybatis-generator-custom");
-
-         run(simplConfiguration);
-      }
-
     /** 启动方法**/
     public static void run(SimplConfiguration simplConfiguration) {
 
-        List<String> warnings = new ArrayList<String>();
+        List<String> warnings = new ArrayList<>();
 
         try {
 
@@ -93,8 +77,8 @@ public class ShellRunner {
                 String tableName = tableNames[i];
 
                 /** 2.1设置表昵称**/
-                String nickName = tableName;
-                for(String nick : nickName.split(DELIMITER)){
+                String nickName = "";
+                for(String nick : tableName.split(DELIMITER)){
                     if(StringUtils.isNullOrEmpty(nick)){
                         continue;
                     }
