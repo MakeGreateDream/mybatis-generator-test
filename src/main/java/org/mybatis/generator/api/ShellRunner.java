@@ -17,15 +17,13 @@ package org.mybatis.generator.api;
 
 import com.mysql.jdbc.StringUtils;
 import org.mybatis.generator.config.*;
-import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.exception.InvalidConfigurationException;
-import org.mybatis.generator.exception.XMLParserException;
 import org.mybatis.generator.internal.DefaultShellCallback;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
@@ -52,7 +50,7 @@ public class ShellRunner {
 
      public static void main(String[] args) throws IOException {
          SimplConfiguration simplConfiguration = new SimplConfiguration();
-         simplConfiguration.setAuthor("weiyf");
+         simplConfiguration.setAuthor("xxx");
          simplConfiguration.setConnectionURL("jdbc:mysql://localhost:3306/test");
          simplConfiguration.setUserId("root");
          simplConfiguration.setPassword("1234");
@@ -61,7 +59,7 @@ public class ShellRunner {
          simplConfiguration.setModelTargetPackage("com.test.cms");
 
          /** 多个项目在同一组时，只到组的路径**/
-         simplConfiguration.setTargetProject("D:\\project\\test\\test-project");
+         simplConfiguration.setTargetProject("D:\\project\\mybatis-generator-custom");
 
          run(simplConfiguration);
       }
@@ -95,8 +93,8 @@ public class ShellRunner {
                 String tableName = tableNames[i];
 
                 /** 2.1设置表昵称**/
-                String nickName = "";
-                for(String nick : tableName.split(DELIMITER)){
+                String nickName = tableName;
+                for(String nick : nickName.split(DELIMITER)){
                     if(StringUtils.isNullOrEmpty(nick)){
                         continue;
                     }
