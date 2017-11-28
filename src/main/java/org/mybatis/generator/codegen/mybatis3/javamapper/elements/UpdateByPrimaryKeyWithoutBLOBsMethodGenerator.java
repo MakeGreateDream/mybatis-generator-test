@@ -48,7 +48,7 @@ public class UpdateByPrimaryKeyWithoutBLOBsMethodGenerator extends
         //方法名称
         method.setName(introspectedTable.getUpdateByPrimaryKeyStatementId());
         //方法参数
-        method.addParameter(new Parameter(parameterType, "record")); //$NON-NLS-1$
+        method.addParameter(new Parameter(parameterType, "po")); //$NON-NLS-1$
         //
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);

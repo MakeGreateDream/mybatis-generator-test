@@ -63,7 +63,7 @@ public class ProviderSelectByExampleWithoutBLOBsMethodGenerator extends
         Method method = new Method(getMethodName());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(FullyQualifiedJavaType.getStringInstance());
-        method.addParameter(new Parameter(fqjt, "example")); //$NON-NLS-1$
+        method.addParameter(new Parameter(fqjt, "po")); //$NON-NLS-1$
         
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);

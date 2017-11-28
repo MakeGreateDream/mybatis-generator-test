@@ -57,7 +57,7 @@ public class InsertMethodGenerator extends AbstractJavaMapperMethodGenerator {
         }
 
         importedTypes.add(parameterType);
-        method.addParameter(new Parameter(parameterType, "record"));
+        method.addParameter(new Parameter(parameterType, "po"));
 
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);

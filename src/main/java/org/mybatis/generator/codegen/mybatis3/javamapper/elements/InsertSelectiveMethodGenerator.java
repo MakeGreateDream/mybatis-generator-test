@@ -49,7 +49,7 @@ public class InsertSelectiveMethodGenerator extends
                 .calculateAllFieldsClass();
 
         importedTypes.add(parameterType);
-        method.addParameter(new Parameter(parameterType, "record")); //$NON-NLS-1$
+        method.addParameter(new Parameter(parameterType, "po")); //$NON-NLS-1$
 
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);

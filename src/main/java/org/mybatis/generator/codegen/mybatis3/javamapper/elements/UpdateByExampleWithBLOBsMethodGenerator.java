@@ -54,13 +54,13 @@ public class UpdateByExampleWithBLOBsMethodGenerator extends
                     .getBaseRecordType());
         }
         method.addParameter(new Parameter(parameterType,
-                "record", "@Param(\"record\")")); //$NON-NLS-1$ //$NON-NLS-2$
+                "po", "@Param(\"po\")")); //$NON-NLS-1$ //$NON-NLS-2$
         importedTypes.add(parameterType);
 
         FullyQualifiedJavaType exampleType = new FullyQualifiedJavaType(
                 introspectedTable.getBaseRecordType());
         method.addParameter(new Parameter(exampleType,
-                "example", "@Param(\"example\")")); //$NON-NLS-1$ //$NON-NLS-2$
+                "po", "@Param(\"po\")")); //$NON-NLS-1$ //$NON-NLS-2$
         importedTypes.add(exampleType);
 
         importedTypes.add(new FullyQualifiedJavaType(

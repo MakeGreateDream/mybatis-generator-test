@@ -159,7 +159,7 @@ public class ProviderApplyWhereMethodGenerator extends
         if (!useLegacyBuilder) {
             method.addParameter(new Parameter(NEW_BUILDER_IMPORT, "sql")); //$NON-NLS-1$
         }
-        method.addParameter(new Parameter(fqjt, "example")); //$NON-NLS-1$
+        method.addParameter(new Parameter(fqjt, "po")); //$NON-NLS-1$
         method.addParameter(new Parameter(FullyQualifiedJavaType.getBooleanPrimitiveInstance(), "includeExamplePhrase")); //$NON-NLS-1$
         
         context.getCommentGenerator().addGeneralMethodComment(method,

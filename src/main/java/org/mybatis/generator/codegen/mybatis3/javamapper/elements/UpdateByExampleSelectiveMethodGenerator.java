@@ -42,7 +42,7 @@ public class UpdateByExampleSelectiveMethodGenerator extends
 
         FullyQualifiedJavaType parameterType =
             introspectedTable.getRules().calculateAllFieldsClass();
-        method.addParameter(new Parameter(parameterType,"record"));
+        method.addParameter(new Parameter(parameterType,"po"));
         importedTypes.add(parameterType);
 
         context.getCommentGenerator().addGeneralMethodComment(method,
