@@ -42,6 +42,9 @@ public class ShellRunner {
     /** 作者**/
     public static String AUTHOR = "xxx";
 
+    /** 是否生成service文件**/
+    public static Integer Create_Service_File = 1;
+
     /** jdbcDriver**/
     private static final String JDBC_CLASS = "com.mysql.jdbc.Driver";
 
@@ -57,6 +60,8 @@ public class ShellRunner {
 
             /** 赋值**/
             AUTHOR = simplConfiguration.getAuthor();
+
+            Create_Service_File = simplConfiguration.getMakeServiceFile();
 
             /** 第一个context里存放的是配置相关内容**/
             Context context = new Context(ModelType.CONDITIONAL);

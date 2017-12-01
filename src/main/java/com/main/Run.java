@@ -32,9 +32,10 @@ public class Run {
         simplConfiguration.setConnectionURL("jdbc:mysql://localhost:3306/test");
         simplConfiguration.setUserId("root");
         simplConfiguration.setPassword("1234");
-        simplConfiguration.setTableName("account");
+        simplConfiguration.setTableName("t_user");
 
         simplConfiguration.setModelTargetPackage("com.test.cms");
+        simplConfiguration.setMakeServiceFile(0);
 
         /** 多个项目在同一组时，只到组的路径**/
         simplConfiguration.setTargetProject("D:\\project\\mybatis-generator-custom");

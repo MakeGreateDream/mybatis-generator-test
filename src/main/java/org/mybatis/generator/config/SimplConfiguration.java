@@ -38,6 +38,9 @@ public class SimplConfiguration {
     /** 表名,多个表用英文半角逗号分隔**/
     private String tableName;
 
+    /** 是否创建service文件，默认创建**/
+    private Integer makeServiceFile;
+
     /** model包名 只定义基础包名即可，其他包名会自动生成**/
     private String modelTargetPackage;
 
@@ -121,5 +124,13 @@ public class SimplConfiguration {
 
     public void setTargetProject(String targetProject) {
         this.targetProject = targetProject + srcMain;
+    }
+
+    public Integer getMakeServiceFile() {
+        return makeServiceFile;
+    }
+
+    public void setMakeServiceFile(Integer makeServiceFile) {
+        this.makeServiceFile = makeServiceFile;
     }
 }

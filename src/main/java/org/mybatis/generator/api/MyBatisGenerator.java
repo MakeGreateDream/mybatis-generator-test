@@ -311,8 +311,19 @@ public class MyBatisGenerator {
             File targetFile;
             String source = null;
             try {
+
+                /** 是否生成service文件**/
+                String serviceName = gjf.getFileName();
+                if(ShellRunner.Create_Service_File.intValue() == 0
+                        && serviceName.contains("Service")){
+                    System.out.println("跳过service文件生成====》");
+                    continue;
+                }
+
+
                 File directory = shellCallback.getDirectory(gjf
                         .getTargetProject(), gjf.getTargetPackage());
+
 
                 targetFile = new File(directory, gjf.getFileName());
                 if (targetFile.exists()) {

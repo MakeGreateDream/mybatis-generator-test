@@ -24,6 +24,7 @@ import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
+import org.mybatis.generator.utils.KeyWorldUtils;
 
 /**
  * 
@@ -80,9 +81,13 @@ public class SelectByPrimaryKeyElementGenerator extends
         StringBuilder selectColunm = new StringBuilder();
         for (int i = 0; i < introspectedTable.getAllColumns().size(); i++) {
             IntrospectedColumn introspectedColumn = introspectedTable.getAllColumns().get(i);
-            selectColunm.append(MyBatis3FormattingUtilities
+
+            String escColumnName = KeyWorldUtils.changeKeyWord(MyBatis3FormattingUtilities
                     .getEscapedColumnName(introspectedColumn));
 
+            selectColunm.append(escColumnName)
+                    .append(" as ")
+                    .append(introspectedColumn.getJavaProperty());
             if (i + 1 < introspectedTable.getAllColumns().size()) {
                 if (!introspectedTable.getAllColumns().get(i + 1).isIdentity()) {
                     selectColunm.append(", ");
