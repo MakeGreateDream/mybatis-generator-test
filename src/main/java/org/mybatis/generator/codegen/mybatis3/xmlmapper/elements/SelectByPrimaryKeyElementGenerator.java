@@ -85,9 +85,11 @@ public class SelectByPrimaryKeyElementGenerator extends
             String escColumnName = KeyWorldUtils.changeKeyWord(MyBatis3FormattingUtilities
                     .getEscapedColumnName(introspectedColumn));
 
+            String javaProperty = KeyWorldUtils.changeKeyWord(introspectedColumn.getJavaProperty());
+
             selectColunm.append(escColumnName)
                     .append(" as ")
-                    .append(introspectedColumn.getJavaProperty());
+                    .append(javaProperty);
             if (i + 1 < introspectedTable.getAllColumns().size()) {
                 if (!introspectedTable.getAllColumns().get(i + 1).isIdentity()) {
                     selectColunm.append(", ");
