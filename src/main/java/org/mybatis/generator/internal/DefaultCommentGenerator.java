@@ -200,7 +200,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
         if (suppressAllComments) {
             return;
         }
-        field.addJavaDocLine("@ApiModelProperty( value = \"" + introspectedColumn.getRemarks() + "\")");
+        field.addJavaDocLine("@ApiModelProperty( \"" + introspectedColumn.getRemarks() + "\")");
 
         addJavadocTag(field, false);
 
