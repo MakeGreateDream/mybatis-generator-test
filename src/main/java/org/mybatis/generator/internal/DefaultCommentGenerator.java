@@ -162,9 +162,9 @@ public class DefaultCommentGenerator implements CommentGenerator {
         /** 增加类注解**/
         innerClass.addJavaDocLine("@Getter");
         innerClass.addJavaDocLine("@Setter");
-        innerClass.addJavaDocLine("@AllArgsConstructor");
-        innerClass.addJavaDocLine("@NoArgsConstructor");
-        innerClass.addJavaDocLine("@Builder");
+//        innerClass.addJavaDocLine("@AllArgsConstructor");
+//        innerClass.addJavaDocLine("@NoArgsConstructor");
+//        innerClass.addJavaDocLine("@Builder");
 
         addJavadocTag(innerClass, false);
     }
