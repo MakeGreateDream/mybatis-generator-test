@@ -19,11 +19,11 @@ public class KeyWorldUtils {
             return word;
         }
 
-        String newWord = word.toLowerCase();
-        if(Arrays.asList(MySQLKeyWords).contains(word)){
-            return "`" + newWord + "`";
+        String newWord = word;
+        if(Arrays.asList(MySQLKeyWords).contains(newWord.toLowerCase())){
+            return "`" + word + "`";
         }
-        return newWord;
+        return word;
     }
 
     public static final String[] MySQLKeyWords = {"add","all","alter","analyze","and","as","asc","asensitive","before",
