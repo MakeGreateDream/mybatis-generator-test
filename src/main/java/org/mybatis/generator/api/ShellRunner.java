@@ -88,7 +88,10 @@ public class ShellRunner {
                         continue;
                     }
                     char[] nickChar = nick.toCharArray();
-                    nickChar[0] -= 32;
+                    char firstWord = nickChar[0];
+                    if((int)'a' <= firstWord && firstWord <= (int)'z' ){
+                        nickChar[0] -= 32;
+                    }
                     nickName += String.valueOf(nickChar);
                 }
                 TableConfiguration tableConfiguration = new TableConfiguration(new Context(ModelType.CONDITIONAL));
