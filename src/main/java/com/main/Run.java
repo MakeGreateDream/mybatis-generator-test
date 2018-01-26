@@ -40,11 +40,11 @@ public class Run {
         /** 项目绝对路径**/
         simplConfiguration.setTargetProject("D:\\project\\mybatis-generator-custom");
 
-        /** 表名，多个用**/
-        simplConfiguration.setTableName("xx,xxx");
+        /** 表名，多个用英文半角逗号隔开**/
+        simplConfiguration.setTableName("xxx,xxx");
 
         /** 模块名，1-n(n=tableName的个数),name支持a、a.b(a模块下的b模块) **/
-        simplConfiguration.setModelName("account,account.cs");
+        simplConfiguration.setModelName("xxx,xxx.xx");
 
         /** 生成的Sql是否使用别名，0:否，1：使用。支持1-n,n=tableName的个数**/
         simplConfiguration.setUseFieldAlias("0,1");
