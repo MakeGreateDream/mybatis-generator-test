@@ -46,7 +46,7 @@ public class RowBoundsPlugin extends PluginAdapter {
     private Map<FullyQualifiedTable, List<XmlElement>> elementsToAdd;
 
     public RowBoundsPlugin() {
-        rowBounds = new FullyQualifiedJavaType("org.apache.ibatis.session.RowBounds"); //$NON-NLS-1$
+        rowBounds = new FullyQualifiedJavaType("org.apache.ibatis.check.RowBounds"); //$NON-NLS-1$
         elementsToAdd = new HashMap<FullyQualifiedTable, List<XmlElement>>();
     }
     

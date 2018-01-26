@@ -77,9 +77,18 @@ public class ShellRunner {
             /** 2.表配置**/
             List<TableConfiguration> tables = new ArrayList<>();
             String[] tableNames = simplConfiguration.getTableName().split(",");
+            String[] modelNames = simplConfiguration.getModelName().split(",");
+            String[] fieldAlias = simplConfiguration.getUseFieldAlias().split(",");
 
             for(int i=0; i<tableNames.length; i++){
                 String tableName = tableNames[i];
+
+                /** 只有一个值，生成的文件放在同一个模块下**/
+                String modelName = modelNames.length == 1 ? modelNames[0] : modelNames[i];
+
+                /** 只有一个值，所有文件查询sql都按照第一个规则来**/
+                String userFieldAlias = fieldAlias.length == 1 ? fieldAlias[0] : fieldAlias[i];
+
 
                 /** 2.1设置表昵称**/
                 String nickName = "";
@@ -98,6 +107,8 @@ public class ShellRunner {
 
                 tableConfiguration.setTableName(tableName);
                 tableConfiguration.setDomainObjectName(nickName);
+                tableConfiguration.setModelName(modelName);
+                tableConfiguration.setFieldAlias(userFieldAlias);
                 tables.add(tableConfiguration);
             }
             context.setTableConfiguration(tables);

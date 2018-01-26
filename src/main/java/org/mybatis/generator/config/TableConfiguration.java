@@ -86,7 +86,13 @@ public class TableConfiguration extends PropertyHolder {
     
     /** The domain object name. */
     private String domainObjectName;
-    
+
+    /** The domain model name. */
+    private String modelName;
+
+    /** The sql field alias*/
+    private String fieldAlias;
+
     /** The alias. */
     private String alias;
     
@@ -485,6 +491,22 @@ public class TableConfiguration extends PropertyHolder {
      */
     public void setDomainObjectName(String domainObjectName) {
         this.domainObjectName = domainObjectName;
+    }
+
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
+    }
+
+    public String getModelName() {
+        return modelName;
+    }
+
+    public String getFieldAlias() {
+        return fieldAlias;
+    }
+
+    public void setFieldAlias(String fieldAlias) {
+        this.fieldAlias = fieldAlias;
     }
 
     /**

@@ -11,7 +11,7 @@
 
     <groupId>com.test</groupId>
     <artifactId>test-mybatis-generator-core</artifactId>
-    <version>1.0.0-RELEASE</version>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -56,16 +56,4 @@
 
     </dependencies>
 
-    <distributionManagement>
-        <repository>
-            <id>new-nexus-releases</id>
-            <name>Releases</name>
-            <url>http://192.168.1.200:8081/repository/maven-releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>new-nexus-snapshots</id>
-            <name>Internal Snapshot</name>
-            <url>http://192.168.1.200:8081/repository/maven-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
 </project>

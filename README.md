@@ -1,11 +1,5 @@
 ﻿#修改笔记
  
- 
-##2017/11/27  修改日志
-
-    新增：Run方法，运行项目
-    修改：驼峰格式字段名格式化方式
- 
 ##新增生成类
 
     ExampleGenerator类中增加相应方法
@@ -34,17 +28,27 @@
     -com
       -test
         -dao
-          -account
-            AccountMapper.java
-            AccountMapper.xml
+          -xxx
+            xxxMapper.java
+            xxxMapper.xml
             
         -model
           -po
-            -account
-              -AccountPo.java
+            -xxx
+              -xxxPo.java
               
         -service
-          -account
+          -xxx
             -impl
-              AccountServiceImpl.java
-            AccountService.java
+              xxxServiceImpl.java
+            xxxService.java
+
+
+##2018/01/26 更新日志
+    
+    新增模块名、SQL是否使用别名字段
+ 
+##2017/11/27 更新日志
+
+    新增：Run方法，运行项目
+    修改：驼峰格式字段名格式化方式

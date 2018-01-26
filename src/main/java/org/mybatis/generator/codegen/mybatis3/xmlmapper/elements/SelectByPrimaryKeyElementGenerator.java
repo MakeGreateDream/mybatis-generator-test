@@ -87,9 +87,14 @@ public class SelectByPrimaryKeyElementGenerator extends
 
             String javaProperty = KeyWorldUtils.changeKeyWord(introspectedColumn.getJavaProperty());
 
-            selectColunm.append(escColumnName)
-                    .append(" as ")
-                    .append(javaProperty);
+            selectColunm.append(escColumnName);
+            Boolean ailasFlag = "0".equals(introspectedTable.getTableConfiguration().getFieldAlias())? false : true;
+
+            if(ailasFlag){
+                selectColunm.append(" as ")
+                        .append(javaProperty);
+            }
+
             if (i + 1 < introspectedTable.getAllColumns().size()) {
                 if (!introspectedTable.getAllColumns().get(i + 1).isIdentity()) {
                     selectColunm.append(", ");

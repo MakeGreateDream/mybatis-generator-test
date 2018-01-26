@@ -1,18 +1,3 @@
-/**
- *    Copyright 2006-2015 the original author or authors.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
- */
 package org.mybatis.generator.config;
 
 import java.io.File;
@@ -38,8 +23,14 @@ public class SimplConfiguration {
     /** 表名,多个表用英文半角逗号分隔**/
     private String tableName;
 
+    /** 模块名，与表名数量相同，多个表用英文半角逗号分隔**/
+    private String modelName;
+
     /** 是否创建service文件，默认创建**/
     private Integer makeServiceFile;
+
+    /** 生成的sql是否使用别名**/
+    private String useFieldAlias;
 
     /** model包名 只定义基础包名即可，其他包名会自动生成**/
     private String modelTargetPackage;
@@ -132,5 +123,21 @@ public class SimplConfiguration {
 
     public void setMakeServiceFile(Integer makeServiceFile) {
         this.makeServiceFile = makeServiceFile;
+    }
+
+    public String getModelName() {
+        return modelName;
+    }
+
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
+    }
+
+    public String getUseFieldAlias() {
+        return useFieldAlias;
+    }
+
+    public void setUseFieldAlias(String useFieldAlias) {
+        this.useFieldAlias = useFieldAlias;
     }
 }

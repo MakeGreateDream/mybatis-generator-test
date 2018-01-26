@@ -1374,9 +1374,7 @@ public abstract class IntrospectedTable {
         }
 
         /** 设置包名**/
-        char[] ch = fullyQualifiedTable.getDomainObjectName().toCharArray();
-        ch[0] += 32;
-        String packageName = String.valueOf(ch);
+        String packageName = tableConfiguration.getModelName();
 
         StringBuilder sb = new StringBuilder();
         sb.append(calculateJavaClientImplementationPackage());
@@ -1399,7 +1397,7 @@ public abstract class IntrospectedTable {
         if (stringHasValue(tableConfiguration.getMapperName())) {
             sb.append(tableConfiguration.getMapperName());
         } else {
-            sb.append(fullyQualifiedTable.getDomainObjectName());
+            sb.append(tableConfiguration.getDomainObjectName());
             sb.append("Mapper");
         }
         setMyBatis3JavaMapperType(sb.toString());
@@ -1436,12 +1434,11 @@ public abstract class IntrospectedTable {
      * TODO 更改文件名、文件所在包
      */
     protected void calculateModelAttributes() {
+        /** 项目路径**/
         String pakkage = calculateJavaModelPackage();
 
-        /** 类驼峰名**/
-        char[] ch = fullyQualifiedTable.getDomainObjectName().toCharArray();
-        ch[0] += 32;
-        String pkName = String.valueOf(ch);
+        /** 项目模块名称**/
+        String pkName = tableConfiguration.getModelName();
 
         StringBuilder sb = new StringBuilder();
         sb.append(pakkage);
@@ -1491,9 +1488,7 @@ public abstract class IntrospectedTable {
     protected String calculateSqlMapPackage() {
 
         /** TODO 获取包路径**/
-        char[] ch = tableConfiguration.getDomainObjectName().toCharArray();
-        ch[0] += 32;
-        String pkName = String.valueOf(ch);
+        String pkName = tableConfiguration.getModelName();
 
         StringBuilder sb = new StringBuilder();
         SqlMapGeneratorConfiguration config = context
@@ -1568,7 +1563,6 @@ public abstract class IntrospectedTable {
     protected String calculateMyBatis3FallbackSqlMapNamespace() {
         StringBuilder sb = new StringBuilder();
         sb.append(calculateSqlMapPackage());
-        sb.append('.');
         if (stringHasValue(tableConfiguration.getMapperName())) {
             sb.append(tableConfiguration.getMapperName());
         } else {

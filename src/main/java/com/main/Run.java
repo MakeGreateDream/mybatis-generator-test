@@ -29,16 +29,25 @@ public class Run {
     private static void shellRun(){
         SimplConfiguration simplConfiguration = new SimplConfiguration();
         simplConfiguration.setAuthor("xxx");
-        simplConfiguration.setConnectionURL("jdbc:mysql://localhost:3306/test");
-        simplConfiguration.setUserId("root");
-        simplConfiguration.setPassword("1234");
-        simplConfiguration.setTableName("t_user");
-
+        simplConfiguration.setConnectionURL("xxx");
+        simplConfiguration.setUserId("xxx");
+        simplConfiguration.setPassword("xxx");
         simplConfiguration.setModelTargetPackage("com.test.cms");
-        simplConfiguration.setMakeServiceFile(0);
 
-        /** 多个项目在同一组时，只到组的路径**/
+        /** 是否创建service文件，0：否；1：创建**/
+        simplConfiguration.setMakeServiceFile(1);
+
+        /** 项目绝对路径**/
         simplConfiguration.setTargetProject("D:\\project\\mybatis-generator-custom");
+
+        /** 表名，多个用**/
+        simplConfiguration.setTableName("xx,xxx");
+
+        /** 模块名，1-n(n=tableName的个数),name支持a、a.b(a模块下的b模块) **/
+        simplConfiguration.setModelName("account,account.cs");
+
+        /** 生成的Sql是否使用别名，0:否，1：使用。支持1-n,n=tableName的个数**/
+        simplConfiguration.setUseFieldAlias("0,1");
 
         ShellRunner.run(simplConfiguration);
     }
