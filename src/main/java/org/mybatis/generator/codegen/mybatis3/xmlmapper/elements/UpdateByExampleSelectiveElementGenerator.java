@@ -34,6 +34,7 @@ public class UpdateByExampleSelectiveElementGenerator extends
         super();
     }
 
+    /** TODO mapper内容**/
     @Override
     public void addElements(XmlElement parentElement) {
         XmlElement answer = new XmlElement("update"); //$NON-NLS-1$
@@ -67,6 +68,7 @@ public class UpdateByExampleSelectiveElementGenerator extends
 
             XmlElement isNotNullElement = new XmlElement("if"); //$NON-NLS-1$
             sb.setLength(0);
+            sb.append(introspectedColumn.getJavaProperty());
             sb.append(" != null"); //$NON-NLS-1$
             isNotNullElement.addAttribute(new Attribute("test", sb.toString())); //$NON-NLS-1$
             dynamicElement.addElement(isNotNullElement);
