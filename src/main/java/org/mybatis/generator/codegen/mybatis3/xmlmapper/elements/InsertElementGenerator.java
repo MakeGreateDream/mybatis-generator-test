@@ -15,9 +15,6 @@
  */
 package org.mybatis.generator.codegen.mybatis3.xmlmapper.elements;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -25,7 +22,10 @@ import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
-import org.mybatis.generator.config.GeneratedKey;
+import org.mybatis.generator.utils.KeyWorldUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -93,8 +93,11 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
                 continue;
             }
 
-            insertClause.append(MyBatis3FormattingUtilities
+            //TODO insert关键字转换
+            String escColumnName = KeyWorldUtils.changeKeyWord(MyBatis3FormattingUtilities
                     .getEscapedColumnName(introspectedColumn));
+
+            insertClause.append(escColumnName);
             valuesClause.append(MyBatis3FormattingUtilities
                     .getParameterClause(introspectedColumn));
 

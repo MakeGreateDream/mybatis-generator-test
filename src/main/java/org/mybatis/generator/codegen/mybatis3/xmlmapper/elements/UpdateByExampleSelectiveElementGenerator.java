@@ -21,6 +21,7 @@ import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
+import org.mybatis.generator.utils.KeyWorldUtils;
 
 /**
  *
@@ -74,7 +75,11 @@ public class UpdateByExampleSelectiveElementGenerator extends
             dynamicElement.addElement(isNotNullElement);
 
             sb.setLength(0);
-            sb.append(MyBatis3FormattingUtilities.getAliasedEscapedColumnName(introspectedColumn));
+
+            //TODO update关键字转换
+            String escColumnName = KeyWorldUtils.changeKeyWord(MyBatis3FormattingUtilities
+                    .getAliasedEscapedColumnName(introspectedColumn));
+            sb.append(escColumnName);
             sb.append(" = "); //$NON-NLS-1$
             sb.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn)); //$NON-NLS-1$
             sb.append(',');
