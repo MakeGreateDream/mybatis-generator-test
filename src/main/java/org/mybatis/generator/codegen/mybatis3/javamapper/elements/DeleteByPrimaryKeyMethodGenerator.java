@@ -47,7 +47,7 @@ public class DeleteByPrimaryKeyMethodGenerator extends
         Method method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
-        method.setName(introspectedTable.getDeleteByPrimaryKeyStatementId());
+        method.setName(introspectedTable.getDeleteStatementId());
 
         if (!isSimple && introspectedTable.getRules().generatePrimaryKeyClass()) {
             FullyQualifiedJavaType type = new FullyQualifiedJavaType(
@@ -56,8 +56,8 @@ public class DeleteByPrimaryKeyMethodGenerator extends
             method.addParameter(new Parameter(type, "key")); //$NON-NLS-1$
         } else {
             // no primary key class - fields are in the base class
-            // if more than one PK field, then we need to annotate the
-            // parameters
+            //            // if more than one PK field, then we need to annotate the
+            //            // parameters
             // for MyBatis
             List<IntrospectedColumn> introspectedColumns = introspectedTable
                     .getPrimaryKeyColumns();
