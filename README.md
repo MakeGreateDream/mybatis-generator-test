@@ -43,6 +43,9 @@
               xxxServiceImpl.java
             xxxService.java
 
+##2018/06/13 更新日志
+    
+    增加生成mapper中update方法参数为空判断
 
 ##2018/01/26 更新日志
     
