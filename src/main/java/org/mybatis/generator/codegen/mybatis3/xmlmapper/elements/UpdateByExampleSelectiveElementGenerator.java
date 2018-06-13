@@ -70,7 +70,15 @@ public class UpdateByExampleSelectiveElementGenerator extends
             XmlElement isNotNullElement = new XmlElement("if"); //$NON-NLS-1$
             sb.setLength(0);
             sb.append(introspectedColumn.getJavaProperty());
-            sb.append(" != null"); //$NON-NLS-1$
+            sb.append(" != null");
+
+            //字符串类型增加不为空字符串判断
+            if(introspectedColumn.getJdbcTypeName().contains("CHAR")){
+                sb.append(" and ");
+                sb.append(introspectedColumn.getJavaProperty());
+                sb.append(" != '' ");
+            }
+
             isNotNullElement.addAttribute(new Attribute("test", sb.toString())); //$NON-NLS-1$
             dynamicElement.addElement(isNotNullElement);
 
