@@ -3,16 +3,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>com.wyf</groupId>
+    <artifactId>wyf-mybatis-generator-core</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
     <parent>
         <groupId>org.mybatis.generator</groupId>
         <artifactId>mybatis-generator</artifactId>
         <version>1.3.2</version>
     </parent>
-
-    <groupId>com.test</groupId>
-    <artifactId>test-mybatis-generator-core</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -45,7 +45,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.35</version>
+            <version>5.1.37</version>
         </dependency>
 
         <dependency>
